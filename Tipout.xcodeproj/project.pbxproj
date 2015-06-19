@@ -10,7 +10,6 @@
 		31B0A827F4947C1344434152 /* Pods_TipoutTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C06D52719B3A1A07AB6BFEF5 /* Pods_TipoutTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		DD8BD6FA1B2F4C9000A57BAE /* Tipout.h in Headers */ = {isa = PBXBuildFile; fileRef = DD8BD6F91B2F4C9000A57BAE /* Tipout.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DD8BD7001B2F4C9000A57BAE /* Tipout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD8BD6F41B2F4C9000A57BAE /* Tipout.framework */; };
-		DD9B6F4F1B2F5D4E00E5E96B /* Cartfile.private in Resources */ = {isa = PBXBuildFile; fileRef = DD9B6F4E1B2F5D4E00E5E96B /* Cartfile.private */; };
 		DD9B6F521B2F6A6600E5E96B /* TipoutModelSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9B6F511B2F6A6600E5E96B /* TipoutModelSpec.swift */; };
 		DD9B6F541B30791F00E5E96B /* TipoutModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9B6F531B30791F00E5E96B /* TipoutModel.swift */; };
 /* End PBXBuildFile section */
@@ -33,7 +32,6 @@
 		DD8BD6F91B2F4C9000A57BAE /* Tipout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Tipout.h; sourceTree = "<group>"; };
 		DD8BD6FF1B2F4C9000A57BAE /* TipoutTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TipoutTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD8BD7051B2F4C9000A57BAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DD9B6F4E1B2F5D4E00E5E96B /* Cartfile.private */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; };
 		DD9B6F501B2F673800E5E96B /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		DD9B6F511B2F6A6600E5E96B /* TipoutModelSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipoutModelSpec.swift; sourceTree = "<group>"; };
 		DD9B6F531B30791F00E5E96B /* TipoutModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipoutModel.swift; sourceTree = "<group>"; };
@@ -65,7 +63,6 @@
 			isa = PBXGroup;
 			children = (
 				DD9B6F551B3234C500E5E96B /* Scratchpad.playground */,
-				DD9B6F4E1B2F5D4E00E5E96B /* Cartfile.private */,
 				DD9B6F501B2F673800E5E96B /* Podfile */,
 				DD8BD6F61B2F4C9000A57BAE /* Tipout */,
 				DD8BD7031B2F4C9000A57BAE /* TipoutTests */,
@@ -203,6 +200,7 @@
 		DD8BD6EB1B2F4C8F00A57BAE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "James Pamplona";
 				TargetAttributes = {
@@ -237,7 +235,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DD9B6F4F1B2F5D4E00E5E96B /* Cartfile.private in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
