@@ -8,54 +8,201 @@
 
 import UIKit
 
+private func max<T: CollectionType>(x: T, y: T) -> T {
+    return count(x) > count(y) ? x : y
+}
+
+private func truncate(num: Double, toDecimalPlaces decimalPlaces: Int) -> Double {
+    let factor = pow(Double(10), Double(decimalPlaces))
+    return trunc(num * factor) / factor
+}
+
 private func round(num: Double, #toNearest: Double) -> Double {
     return round(num / toNearest) * toNearest
 }
 
+public enum TipoutMethod {
+    case Percentage(Double)
+    case Hourly(Double)
+}
+
+public func +(lhs: TipoutModel, rhs: TipoutModel) -> TipoutModel {
+    return lhs.combineWith(rhs)
+}
+
+
+
 public class TipoutModel: NSObject {
+    
+    public enum TipoutStatus {
+        case Over
+        case Under
+        case Even
+    }
+    
+    
+    internal typealias TipoutCalcFunction = () -> Double
     
     // MARK: - Properties
     
     private var roundToNearest: Double = 0.0
     
-    
-    public dynamic var total: Double = 0.0
-    
-    public dynamic var kitchenTipout: Double {
-        var tipout = round((total * 0.3))
-        tipout = total - (tipout + round(total - tipout)) + tipout
-        return tipout
+    public var tipoutStatus: TipoutStatus {
+        let totalTips = tipouts.reduce(0, combine: + )
+        switch totalTips {
+            
+        case _ where totalTips > total:
+            return .Over
+            
+        case _ where totalTips < total:
+            return .Under
+            
+        case _ where totalTips == total:
+            return .Even
+            
+        default:
+            abort()
+        }
     }
     
-    public dynamic var workersHours = [Double](count: 5, repeatedValue: 0.0)
-    
-    public dynamic var workersTipOuts: [Double] {
+    public func combineWith(tipoutModel: TipoutModel) -> TipoutModel {
         
-        let tipouts = workersHours.map {
-            (workerHours: Double) -> Double in
-            let tipout = self.round(((self.total - self.kitchenTipout) / self.totalWorkersHours * workerHours))
-            // If we try to divide by zero, the result will be 'nan', 'Not a Number', so we have to check for this and return 0.0 if it is
-            return isnan(tipout) ? 0.0 : tipout
+        // TODO: Do this without modifying the original values --that is ugly. What are the implications of this?
+        
+        // We need to make the tipoutFunctions arrays the same size in order for addition of two TipoutModels to be commutative
+        
+        let countDifference = self.tipoutFunctions.count - tipoutModel.tipoutFunctions.count
+        switch countDifference {
+        case _ where countDifference > 0:
+            tipoutModel.tipoutFunctions.extend([TipoutCalcFunction](count: countDifference, repeatedValue: { 0.0 }))
+        case _ where countDifference < 0:
+            self.tipoutFunctions.extend([TipoutCalcFunction](count: abs(countDifference), repeatedValue: { 0.0 }))
+        default:
+            break
         }
-        return tipouts
+        
+        let combinedTipoutModel = TipoutModel(roundToNearest: self.roundToNearest)
+        
+        combinedTipoutModel.totalFunction = { self.totalFunction() + tipoutModel.totalFunction() }
+        
+        combinedTipoutModel.tipoutFunctions = map(enumerate(self.tipoutFunctions)) {
+            
+            (index, function) -> TipoutCalcFunction in
+            return { function() + tipoutModel.tipoutFunctions[index]() }
+        }
+        return combinedTipoutModel
+    }
+    
+    public dynamic var total: Double {
+        // We're dealing with money, so truncate the total to 2 decimal places
+        set {
+            totalFunction = { truncate(newValue, toDecimalPlaces: 2) }
+        }
+        get {
+            return totalFunction()
+        }
+    }
+    
+    private var totalFunction: () -> Double
+    
+    
+    
+    private var workers = [TipoutMethod]()
+    
+    
+    
+    
+    
+    // TODO: Use a Result type for this or throw an error in Swift 2. -- or maybe allow it but just indicate the status in a property as a helpful warning?
+    
+    public dynamic var tipouts: [Double] {
+        
+        return tipoutFunctions.map { $0() }
+    }
+    
+    internal var tipoutFunctions = [TipoutCalcFunction]()
+    
+    private var totalPercentage: Double {
+        
+        return workers
+            .filter {
+                switch $0 {
+                case .Percentage:
+                    return true
+                default:
+                    return false
+                }
+            }.map {
+                (tipoutMethod: TipoutMethod) -> Double in
+                switch tipoutMethod {
+                case .Percentage(let percent):
+                    return percent
+                default:
+                    return 0.0
+                }
+            }.reduce(0, combine: + )
     }
     
     public var totalWorkersHours: Double {
-        return workersHours.reduce(0, combine: {$0 + $1})
+        
+        return workers
+            .filter {
+                switch $0 {
+                case .Hourly:
+                    return true
+                default:
+                    return false
+                }
+            }.map {
+                (tipoutMethod: TipoutMethod) -> Double in
+                switch tipoutMethod {
+                case .Hourly(let hours):
+                    return hours
+                default:
+                    return 0.0
+                }
+            }.reduce(0, combine: + )
+        
     }
+    
     
     // MARK: - Methods
     
-
     private func round(num: Double) -> Double {
-        return Tippy.round(num, toNearest: roundToNearest)
+        return Tipout.round(num, toNearest: roundToNearest)
     }
+    
+    public func setWorkers(workers: [TipoutMethod]) {
+        self.workers = workers
+        tipoutFunctions = workers.map {
+            
+            (tipoutMethod: TipoutMethod) -> TipoutCalcFunction in
+            
+            let function: TipoutCalcFunction
+            
+            switch tipoutMethod {
+                
+            case .Percentage(let percentage):
+                
+                function = { self.round(self.total * percentage) }
+                
+            case .Hourly(let hours):
+                
+                function = { self.round((self.total - self.totalPercentage * self.total) * (hours / self.totalWorkersHours)) }
+            }
+            
+            // If we try to divide by zero, the result will be 'nan', 'Not a Number', so we have to check for this and return 0.0 if it is
+            return isnan(function()) ? { 0.0 } : function
+        }
+    }
+    
     
     
     // MARK: - Init
     
     public init(roundToNearest: Double) {
         self.roundToNearest = roundToNearest
+        self.totalFunction = { 0.0 }
         super.init()
     }
     
@@ -65,16 +212,15 @@ public class TipoutModel: NSObject {
     
     
     // MARK: - KVO
-    class func keyPathsForValuesAffectingKitchenTipout() -> Set<NSObject> {
-        return Set(["total"])
-    }
     
     class func keyPathsForValuesAffectingTotalWorkersHours() -> Set<NSObject> {
-        return Set(["workersHours"])
+        
+        return Set(["workers"])
+        
     }
     
-    class func keyPathsForValuesAffectingWorkersTipOuts() -> Set<NSObject> {
-        return Set(["workersHours", "total"])
+    class func keyPathsForValuesAffectingTipouts() -> Set<NSObject> {
+        return Set(["tipoutFunctions", "total"])
     }
     
 }
