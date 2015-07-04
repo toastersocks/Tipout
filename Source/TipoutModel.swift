@@ -96,14 +96,16 @@ public class TipoutModel: NSObject {
     public dynamic var total: Double {
         // We're dealing with money, so truncate the total to 2 decimal places
         set {
+            willChangeValueForKey("total")
             totalFunction = { truncate(newValue, toDecimalPlaces: 2) }
+            didChangeValueForKey("total")
         }
         get {
             return totalFunction()
         }
     }
     
-    private var totalFunction: () -> Double
+    private dynamic var totalFunction: () -> Double
     
     
     
@@ -174,6 +176,8 @@ public class TipoutModel: NSObject {
     
     public func setWorkers(workers: [TipoutMethod]) {
         self.workers = workers
+        willChangeValueForKey("workers")
+        
         tipoutFunctions = workers.map {
             
             (tipoutMethod: TipoutMethod) -> TipoutCalcFunction in
@@ -191,9 +195,12 @@ public class TipoutModel: NSObject {
                 function = { self.round((self.total - self.totalPercentage * self.total) * (hours / self.totalWorkersHours)) }
             }
             
+            
             // If we try to divide by zero, the result will be 'nan', 'Not a Number', so we have to check for this and return 0.0 if it is
             return isnan(function()) ? { 0.0 } : function
         }
+        
+        didChangeValueForKey("workers")
     }
     
     
@@ -213,14 +220,14 @@ public class TipoutModel: NSObject {
     
     // MARK: - KVO
     
-    class func keyPathsForValuesAffectingTotalWorkersHours() -> Set<NSObject> {
-        
-        return Set(["workers"])
-        
-    }
+//    class func keyPathsForValuesAffectingTotalWorkersHours() -> Set<NSObject> {
+//        
+//        return Set(["workers"])
+//        
+//    }
     
     class func keyPathsForValuesAffectingTipouts() -> Set<NSObject> {
-        return Set(["tipoutFunctions", "total"])
+        return Set(["workers", "total"])
     }
     
 }
