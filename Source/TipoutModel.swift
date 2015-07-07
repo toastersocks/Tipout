@@ -94,10 +94,11 @@ public class TipoutModel: NSObject {
     }
     
     public dynamic var total: Double {
-        // We're dealing with money, so truncate the total to 2 decimal places
         set {
             willChangeValueForKey("total")
+            // We're dealing with money, so truncate the total to 2 decimal places
             totalFunction = { truncate(newValue, toDecimalPlaces: 2) }
+            tipoutFunctions = calculateTipoutFunctions()
             didChangeValueForKey("total")
         }
         get {
@@ -109,7 +110,12 @@ public class TipoutModel: NSObject {
     
     
     
-    private var workers = [TipoutMethod]()
+    private var workers = [TipoutMethod]() {
+        didSet {
+            var tipoutFuncs = calculateTipoutFunctions()
+            self.tipoutFunctions = tipoutFuncs
+        }
+    }
     
     
     
@@ -174,15 +180,22 @@ public class TipoutModel: NSObject {
         return Tipout.round(num, toNearest: roundToNearest)
     }
     
-    public func setWorkers(workers: [TipoutMethod]) {
-        self.workers = workers
-        willChangeValueForKey("workers")
+    private func calculateTipoutFunctions() -> [TipoutCalcFunction] {
         
-        tipoutFunctions = workers.map {
+        let calculateRemainder = { [total] (tipoutFuncs: [TipoutCalcFunction]) -> Double in
+            if tipoutFuncs.isEmpty {
+                return 0.0
+            }
+            
+            let totalTipouts = tipoutFuncs.reduce(0, combine: { $0 + $1() })
+            return total - totalTipouts
+        }
+        
+       var tipoutFuncs = workers.map {
             
             (tipoutMethod: TipoutMethod) -> TipoutCalcFunction in
             
-            let function: TipoutCalcFunction
+            let function: TipoutCalcFunction 
             
             switch tipoutMethod {
                 
@@ -199,6 +212,20 @@ public class TipoutModel: NSObject {
             // If we try to divide by zero, the result will be 'nan', 'Not a Number', so we have to check for this and return 0.0 if it is
             return isnan(function()) ? { 0.0 } : function
         }
+        
+        // Add any remainder to the first worker
+        let remainder = calculateRemainder(tipoutFuncs)
+        if remainder != 0.0 {
+            tipoutFuncs[0] = { [tipoutFuncs] in tipoutFuncs[0]() + calculateRemainder(tipoutFuncs) }
+        }
+        return tipoutFuncs
+        
+    }
+    
+    public func setWorkers(workers: [TipoutMethod]) {
+        willChangeValueForKey("workers")
+        
+        self.workers = workers
         
         didChangeValueForKey("workers")
     }
