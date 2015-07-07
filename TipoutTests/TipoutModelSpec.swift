@@ -21,6 +21,36 @@ private func generateDouble(f: Double -> Bool) -> FOXGenerator {
     }
 }
 
+
+private func moveDecimal(num: Int, places: Int) -> Double {
+    let factor = pow(Double(10), Double(places))
+    return Double(num) / factor
+
+}
+
+
+private func bigDecimalGenerator() -> FOXGenerator {
+    let bounds = 999999999999999
+    let numGenerator = FOXChoose(-bounds, bounds)
+    
+    return FOXMap(numGenerator) {
+        let num = $0 as! Int
+        return moveDecimal(num, 5)
+    }
+    
+}
+
+
+private func generateBigMixedDouble(f: Double -> Bool) -> FOXGenerator {
+  
+    return forAll(bigDecimalGenerator()) {
+        (mixedNum: AnyObject!) -> Bool in
+        println(mixedNum)
+        return f(mixedNum as! Double)
+    }
+}
+
+
 func anyTipoutMethod() -> FOXGenerator {
     let kEnumValueString = "enumValueString"
     let kAssociatedValue = "associatedValue"
@@ -29,20 +59,6 @@ func anyTipoutMethod() -> FOXGenerator {
         kAssociatedValue: FOXDouble()
         ])
     }
-
-//return FOXMap(dictionaryGenerator) {
-//    (data) -> TipoutMethod! in
-//    switch data[kEnumValueString] {
-//    case "Hourly":
-//        if let doubleVal = data[kAssociatedValue] as? Double {
-//            return TipoutMethod.Hourly(doubleVal)
-//        }
-//    case
-//    }
-//    FOXElements([TipoutMethod.Hourly(FOXDouble()), TipoutMethod.Percentage(FOXDouble())])
-//}
-
-//private func generateTipoutMethod()
 
 
 class TipoutSpec: QuickSpec {
@@ -58,7 +74,7 @@ class TipoutSpec: QuickSpec {
                 
                 it("its total should be equal to the total of all worker tipouts") {
                     tipoutModel.setWorkers([.Percentage(0.3), .Hourly(4), .Hourly(3), .Hourly(1)])
-                    let property = generateDouble() {
+                    let property = generateBigMixedDouble() {
                         (num: Double) in
                         tipoutModel.total = num
                         
@@ -76,52 +92,20 @@ class TipoutSpec: QuickSpec {
             describe("a worker's tipout") {
                 context("when a worker's tipout is 30%, and the total is 100") {
                     it("should be 30") {
-                        tipoutModel.setWorkers([.Percentage(0.3)])
+                        tipoutModel.setWorkers([.Percentage(0.3), .Hourly(1)])
                         tipoutModel.total = 100
                         expect(tipoutModel.tipouts[0]) == 30.0
                     }
                 }
             }
+            
+            describe("the properties of a tipout") {
+                xit("should be assignable in any order") {
+                    tipoutModel.total = 100.6
+                    tipoutModel.setWorkers([.Percentage(0.3), .Hourly(3)])
+                }
+            }
+            
         }
     }
 }
-
-//class TipoutModelSpec: QuickSpec {
-//    override func spec() {
-//
-//        describe("a TipoutModel") {
-//            var tipoutModel: TipoutModel!
-//
-//            beforeEach {
-//                tipoutModel = TipoutModel(roundToNearest: 0.25)
-//
-//                tipoutModel.workersHours = [4.0, 3.0, 1.0]
-//            }
-//
-//            describe("its total") {
-//                it("should be equal to the total of all worker tipouts") {
-//                    let property = generateDouble() {
-//                        (num: Double) in
-//                        tipoutModel.total = num
-//
-//                        return tipoutModel.workersTipOuts.reduce(tipoutModel.kitchenTipout, combine:{ $0 + $1 }) == tipoutModel.total
-//                    }
-////                    expect(tipoutModel.total).to(equal(tipoutModel.workersTipOuts.reduce(tipoutModel.kitchenTipout, combine:{ $0 + $1 })))
-//                    expect(property).to(hold())
-//                }
-//            }
-//
-//            /**
-//            *  Sanity check
-//            */
-//            describe("its kitchen tipout") {
-//                context("when the total tips are 100") {
-//                    it("should be 30") {
-//                        tipoutModel.total = 100.0
-//                        expect(tipoutModel.kitchenTipout) == 30.0
-//                    }
-//                }
-//            }
-//        }
-//    }
-//}
