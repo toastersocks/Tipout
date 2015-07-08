@@ -90,6 +90,7 @@ public class TipoutModel: NSObject {
             (index, function) -> TipoutCalcFunction in
             return { function() + tipoutModel.tipoutFunctions[index]() }
         }
+        
         return combinedTipoutModel
     }
     
@@ -216,7 +217,7 @@ public class TipoutModel: NSObject {
         // Add any remainder to the first worker
         let remainder = calculateRemainder(tipoutFuncs)
         if remainder != 0.0 {
-            tipoutFuncs[0] = { [tipoutFuncs] in tipoutFuncs[0]() + calculateRemainder(tipoutFuncs) }
+            tipoutFuncs[0] = { [tipoutFuncs] in tipoutFuncs[0]() + Tipout.round(calculateRemainder(tipoutFuncs), toNearest: 0.01) }
         }
         return tipoutFuncs
         
