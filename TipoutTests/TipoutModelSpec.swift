@@ -83,7 +83,6 @@ class TipoutSpec: QuickSpec {
                     expect(property).to(hold())
                 }
             
-            
             }
             
             /**
