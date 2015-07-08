@@ -23,6 +23,7 @@ private func round(num: Double, #toNearest: Double) -> Double {
 
 public enum TipoutMethod {
     case Percentage(Double)
+    case Amount(Double)
     case Hourly(Double)
 }
 
@@ -131,7 +132,7 @@ public class TipoutModel: NSObject {
     
     internal var tipoutFunctions = [TipoutCalcFunction]()
     
-    private var totalPercentage: Double {
+    private var totalPercentageTipouts: Double {
         
         return workers
             .filter {
@@ -146,6 +147,26 @@ public class TipoutModel: NSObject {
                 switch tipoutMethod {
                 case .Percentage(let percent):
                     return percent
+                default:
+                    return 0.0
+                }
+            }.reduce(0, combine: + )
+    }
+    
+    private var totalAmountTipouts: Double {
+        return workers
+            .filter {
+                switch $0 {
+                case .Amount:
+                    return true
+                default:
+                    return false
+                }
+            }.map {
+                (tipoutMethod: TipoutMethod) -> Double in
+                switch tipoutMethod {
+                case .Amount(let amount):
+                    return amount
                 default:
                     return 0.0
                 }
@@ -204,9 +225,13 @@ public class TipoutModel: NSObject {
                 
                 function = { self.round(self.total * percentage) }
                 
+            case .Amount(let amount):
+                
+                function = { amount }
+                
             case .Hourly(let hours):
                 
-                function = { self.round((self.total - self.totalPercentage * self.total) * (hours / self.totalWorkersHours)) }
+                function = { self.round((self.total - (self.totalPercentageTipouts * self.total + self.totalAmountTipouts)) * (hours / self.totalWorkersHours)) }
             }
             
             
