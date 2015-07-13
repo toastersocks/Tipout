@@ -78,11 +78,10 @@ class TipoutSpec: QuickSpec {
                         (num: Double) in
                         tipoutModel.total = num
                         
-                        return tipoutModel.tipouts.reduce(0, combine: + ) == tipoutModel.total
+                        return abs(tipoutModel.tipouts.reduce(0, combine: + ) - tipoutModel.total) < 0.0001
                     }
                     expect(property).to(hold())
                 }
-            
             
             }
             

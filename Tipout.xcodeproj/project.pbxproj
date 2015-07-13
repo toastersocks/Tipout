@@ -275,7 +275,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TipoutTests/Pods-TipoutTests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/../Tippy/Pods/Target Support Files/Pods-TipoutTests/Pods-TipoutTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6BB8A6D0A6C2E21F023E8902 /* Check Pods Manifest.lock */ = {
