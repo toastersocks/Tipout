@@ -1,6 +1,6 @@
 //
 //  TipoutModel.swift
-//  Tippy
+//  Tipout
 //
 //  Created by James Pamplona on 5/29/15.
 //  Copyright (c) 2015 James Pamplona. All rights reserved.
