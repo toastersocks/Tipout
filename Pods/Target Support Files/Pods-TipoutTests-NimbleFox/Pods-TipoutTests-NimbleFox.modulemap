@@ -1,6 +1,0 @@
-framework module NimbleFox {
-  umbrella header "Pods-TipoutTests-NimbleFox-umbrella.h"
-
-  export *
-  module * { export * }
-}

@@ -1,6 +1,0 @@
-framework module Pods_TipoutTests {
-  umbrella header "Pods-TipoutTests-umbrella.h"
-
-  export *
-  module * { export * }
-}
