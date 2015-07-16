@@ -7,15 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		31B0A827F4947C1344434152 /* Pods_TipoutTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C06D52719B3A1A07AB6BFEF5 /* Pods_TipoutTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		DD7CBA071B5841D1003B718D /* Fox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDE3D2401B5460AE00B1C703 /* Fox.framework */; };
+		DD7CBA081B5841D1003B718D /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDE3D2411B5460AE00B1C703 /* Nimble.framework */; };
+		DD7CBA091B5841D1003B718D /* NimbleFox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDE3D2421B5460AE00B1C703 /* NimbleFox.framework */; };
+		DD7CBA0A1B5841D1003B718D /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDE3D2431B5460AE00B1C703 /* Quick.framework */; };
 		DD8BD6FA1B2F4C9000A57BAE /* Tipout.h in Headers */ = {isa = PBXBuildFile; fileRef = DD8BD6F91B2F4C9000A57BAE /* Tipout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DD8BD7001B2F4C9000A57BAE /* Tipout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD8BD6F41B2F4C9000A57BAE /* Tipout.framework */; };
 		DD9B6F521B2F6A6600E5E96B /* TipoutModelSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9B6F511B2F6A6600E5E96B /* TipoutModelSpec.swift */; };
 		DD9B6F541B30791F00E5E96B /* TipoutModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9B6F531B30791F00E5E96B /* TipoutModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		DD8BD7011B2F4C9000A57BAE /* PBXContainerItemProxy */ = {
+		DD7CBA0D1B58493A003B718D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DD8BD6EB1B2F4C8F00A57BAE /* Project object */;
 			proxyType = 1;
@@ -25,8 +27,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		445C5FCC9A3E91B213E32491 /* Pods-TipoutTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TipoutTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TipoutTests/Pods-TipoutTests.release.xcconfig"; sourceTree = "<group>"; };
-		C06D52719B3A1A07AB6BFEF5 /* Pods_TipoutTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TipoutTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD8BD6F41B2F4C9000A57BAE /* Tipout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Tipout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD8BD6F81B2F4C9000A57BAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD8BD6F91B2F4C9000A57BAE /* Tipout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Tipout.h; sourceTree = "<group>"; };
@@ -36,7 +36,11 @@
 		DD9B6F511B2F6A6600E5E96B /* TipoutModelSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipoutModelSpec.swift; sourceTree = "<group>"; };
 		DD9B6F531B30791F00E5E96B /* TipoutModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipoutModel.swift; sourceTree = "<group>"; };
 		DD9B6F551B3234C500E5E96B /* Scratchpad.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Scratchpad.playground; sourceTree = "<group>"; };
-		E03F2A8C45B87951DCCD9812 /* Pods-TipoutTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TipoutTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TipoutTests/Pods-TipoutTests.debug.xcconfig"; sourceTree = "<group>"; };
+		DDE3D23F1B545B6A00B1C703 /* Cartfile.private */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		DDE3D2401B5460AE00B1C703 /* Fox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fox.framework; path = Carthage/Build/iOS/Fox.framework; sourceTree = "<group>"; };
+		DDE3D2411B5460AE00B1C703 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
+		DDE3D2421B5460AE00B1C703 /* NimbleFox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NimbleFox.framework; path = Carthage/Build/iOS/NimbleFox.framework; sourceTree = "<group>"; };
+		DDE3D2431B5460AE00B1C703 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,8 +55,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DD8BD7001B2F4C9000A57BAE /* Tipout.framework in Frameworks */,
-				31B0A827F4947C1344434152 /* Pods_TipoutTests.framework in Frameworks */,
+				DD7CBA071B5841D1003B718D /* Fox.framework in Frameworks */,
+				DD7CBA081B5841D1003B718D /* Nimble.framework in Frameworks */,
+				DD7CBA091B5841D1003B718D /* NimbleFox.framework in Frameworks */,
+				DD7CBA0A1B5841D1003B718D /* Quick.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,12 +68,12 @@
 		DD8BD6EA1B2F4C8F00A57BAE = {
 			isa = PBXGroup;
 			children = (
+				DDE3D23F1B545B6A00B1C703 /* Cartfile.private */,
 				DD9B6F551B3234C500E5E96B /* Scratchpad.playground */,
 				DD9B6F501B2F673800E5E96B /* Podfile */,
 				DD8BD6F61B2F4C9000A57BAE /* Tipout */,
 				DD8BD7031B2F4C9000A57BAE /* TipoutTests */,
 				DD8BD6F51B2F4C9000A57BAE /* Products */,
-				FBBA9ED27BB8BA5164C25546 /* Pods */,
 				E2E1F54D7C2467856A06AF92 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -127,18 +133,12 @@
 		E2E1F54D7C2467856A06AF92 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C06D52719B3A1A07AB6BFEF5 /* Pods_TipoutTests.framework */,
+				DDE3D2401B5460AE00B1C703 /* Fox.framework */,
+				DDE3D2411B5460AE00B1C703 /* Nimble.framework */,
+				DDE3D2421B5460AE00B1C703 /* NimbleFox.framework */,
+				DDE3D2431B5460AE00B1C703 /* Quick.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		FBBA9ED27BB8BA5164C25546 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				E03F2A8C45B87951DCCD9812 /* Pods-TipoutTests.debug.xcconfig */,
-				445C5FCC9A3E91B213E32491 /* Pods-TipoutTests.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -177,17 +177,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DD8BD70D1B2F4C9000A57BAE /* Build configuration list for PBXNativeTarget "TipoutTests" */;
 			buildPhases = (
-				6BB8A6D0A6C2E21F023E8902 /* Check Pods Manifest.lock */,
 				DD8BD6FB1B2F4C9000A57BAE /* Sources */,
 				DD8BD6FC1B2F4C9000A57BAE /* Frameworks */,
 				DD8BD6FD1B2F4C9000A57BAE /* Resources */,
-				336DC0A453D5B8CB89FAB83D /* Embed Pods Frameworks */,
-				4C48A2082B2B8FA283FB00F2 /* Copy Pods Resources */,
+				DD7CBA0B1B5841D6003B718D /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				DD8BD7021B2F4C9000A57BAE /* PBXTargetDependency */,
+				DD7CBA0E1B58493A003B718D /* PBXTargetDependency */,
 			);
 			name = TipoutTests;
 			productName = TipoutTests;
@@ -248,50 +246,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		336DC0A453D5B8CB89FAB83D /* Embed Pods Frameworks */ = {
+		DD7CBA0B1B5841D6003B718D /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Fox.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Nimble.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/NimbleFox.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Quick.framework",
 			);
-			name = "Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TipoutTests/Pods-TipoutTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4C48A2082B2B8FA283FB00F2 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/../Tippy/Pods/Target Support Files/Pods-TipoutTests/Pods-TipoutTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		6BB8A6D0A6C2E21F023E8902 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -315,10 +285,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		DD8BD7021B2F4C9000A57BAE /* PBXTargetDependency */ = {
+		DD7CBA0E1B58493A003B718D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = DD8BD6F31B2F4C9000A57BAE /* Tipout */;
-			targetProxy = DD8BD7011B2F4C9000A57BAE /* PBXContainerItemProxy */;
+			targetProxy = DD7CBA0D1B58493A003B718D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -424,6 +394,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Tipout/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -441,6 +415,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Tipout/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -451,11 +429,11 @@
 		};
 		DD8BD70E1B2F4C9000A57BAE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E03F2A8C45B87951DCCD9812 /* Pods-TipoutTests.debug.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -463,17 +441,18 @@
 				);
 				INFOPLIST_FILE = TipoutTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
 		DD8BD70F1B2F4C9000A57BAE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 445C5FCC9A3E91B213E32491 /* Pods-TipoutTests.release.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = TipoutTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

@@ -1,6 +1,0 @@
-framework module Fox {
-  umbrella header "Pods-TipoutTests-Fox-umbrella.h"
-
-  export *
-  module * { export * }
-}

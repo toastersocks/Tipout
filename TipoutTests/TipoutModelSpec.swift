@@ -30,7 +30,7 @@ private func moveDecimal(num: Int, places: Int) -> Double {
 
 
 private func bigDecimalGenerator() -> FOXGenerator {
-    let bounds = 999999999999999
+    let bounds = 999999999
     let numGenerator = FOXChoose(-bounds, bounds)
     
     return FOXMap(numGenerator) {
@@ -108,3 +108,4 @@ class TipoutSpec: QuickSpec {
         }
     }
 }
+
