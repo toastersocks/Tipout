@@ -1,6 +1,0 @@
-[submodule "Carthage/Checkouts/NimbleFox"]
-	path = Carthage/Checkouts/NimbleFox
-	url = https://github.com/thoughtbot/NimbleFox.git
-[submodule "Carthage/Checkouts/Fox"]
-	path = Carthage/Checkouts/Fox
-	url = https://github.com/toastersocks/Fox.git
