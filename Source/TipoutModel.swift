@@ -13,6 +13,7 @@ public enum TipoutMethod {
     case Percentage(Double)
     case Amount(Double)
     case Hourly(Double)
+    case Function(() -> Double)
 }
 
 public func +(lhs: TipoutModel, rhs: TipoutModel) -> TipoutModel {
@@ -183,6 +184,27 @@ public class TipoutModel: NSObject {
         
     }
     
+    private var totalFunctionTipouts: Double {
+        
+        return workers
+            .filter {
+                switch $0 {
+                case .Function:
+                    return true
+                default:
+                    return false
+                }
+            }.map {
+                (tipoutMethod: TipoutMethod) -> Double in
+                switch tipoutMethod {
+                case .Function(let f):
+                    return f()
+                default:
+                    return 0.0
+                }
+            }.reduce(0, combine: + )
+    }
+    
     
     // MARK: - Methods
     
@@ -219,7 +241,11 @@ public class TipoutModel: NSObject {
                 
             case .Hourly(let hours):
                 
-                function = { self.round((self.total - (self.totalPercentageTipouts * self.total + self.totalAmountTipouts)) * (hours / self.totalWorkersHours)) }
+                function = { self.round((self.total - (self.totalPercentageTipouts + self.totalAmountTipouts + self.totalFunctionTipouts)) * (hours / self.totalWorkersHours)) }
+                
+            case .Function(let f):
+                
+                function = f
             }
             
             
