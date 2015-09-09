@@ -16,6 +16,25 @@ public enum TipoutMethod {
     case Function(() -> Double)
 }
 
+ extension TipoutMethod: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        var descString = ""
+        print("TipoutMethod.", terminator: "", toStream: &descString)
+        switch self {
+        case Percentage(let percent):
+            print("Percentage(\(percent))", toStream: &descString)
+        case .Amount(let amount):
+            print("Amount(\(amount))", toStream: &descString)
+        case .Hourly(let hours):
+            print("Hourly(\(hours))", toStream: &descString)
+        case .Function(let f):
+            print("Function(\(f) (With a value of \(f()))", toStream: &descString)
+        }
+        
+        return descString
+    }
+}
+
 public func +(lhs: TipoutModel, rhs: TipoutModel) -> TipoutModel {
     return lhs.combineWith(rhs)
 }
