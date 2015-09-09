@@ -76,39 +76,22 @@ public class TipoutModel: NSObject {
     
     public func combineWith(tipoutModel: TipoutModel) -> TipoutModel {
         
-        // TODO: Do this without modifying the original values --that is ugly. What are the implications of this?
-        
-        // We need to make the tipoutFunctions arrays the same size in order for addition of two TipoutModels to be commutative
-        
-        let countDifference = self.tipoutFunctions.count - tipoutModel.tipoutFunctions.count
-        switch countDifference {
-        case _ where countDifference > 0:
-            tipoutModel.tipoutFunctions.extend([TipoutCalcFunction](count: countDifference, repeatedValue: { 0.0 }))
-        case _ where countDifference < 0:
-            self.tipoutFunctions.extend([TipoutCalcFunction](count: abs(countDifference), repeatedValue: { 0.0 }))
-        default:
-            break
-        }
-        
         let combinedTipoutModel = TipoutModel(roundToNearest: self.roundToNearest)
-        
         combinedTipoutModel.totalFunction = { self.totalFunction() + tipoutModel.totalFunction() }
-        
-        combinedTipoutModel.tipoutFunctions = map(enumerate(self.tipoutFunctions)) {
-            
-            (index, function) -> TipoutCalcFunction in
-            return { function() + tipoutModel.tipoutFunctions[index]() }
-        }
+        var combinedWorkers = zip(workers, tipoutModel.workers).map(+)
+        combinedWorkers.appendContentsOf(leftoverIndexes(x: workers, y: tipoutModel.workers))
+        combinedTipoutModel.workers = combinedWorkers
         
         return combinedTipoutModel
     }
+    
     
     public dynamic var total: Double {
         set {
             willChangeValueForKey("total")
             // We're dealing with money, so truncate the total to 2 decimal places
             totalFunction = { truncate(newValue, toDecimalPlaces: 2) }
-            tipoutFunctions = calculateTipoutFunctions()
+            assignTipoutFunctions()
             didChangeValueForKey("total")
         }
         get {
@@ -120,29 +103,33 @@ public class TipoutModel: NSObject {
     
     
     
-    private var workers = [TipoutMethod]() {
+    public var workers = [Worker]() {
         didSet {
-            var tipoutFuncs = calculateTipoutFunctions()
-            self.tipoutFunctions = tipoutFuncs
+            assignTipoutFunctions()
+            //            self.tipoutFunctions = tipoutFuncs
+        }
+    }
+    
+    private func assignTipoutFunctions() {
+        if !workers.isEmpty && total != 0.0 {
+            
+        let tipoutFuncs = calculateTipoutFunctions()
+        for (index, function) in tipoutFuncs.enumerate() {
+            workers[index].function = function
+            }
         }
     }
     
     
-    
-    
-    
-    // TODO: Use a Result type for this or throw an error in Swift 2. -- or maybe allow it but just indicate the status in a property as a helpful warning?
-    
     public dynamic var tipouts: [Double] {
         
-        return tipoutFunctions.map { $0() }
+        return workers.map { $0.tipout }
     }
-    
-    internal var tipoutFunctions = [TipoutCalcFunction]()
     
     private var totalPercentageTipouts: Double {
         
         return workers
+            .map { $0.method }
             .filter {
                 switch $0 {
                 case .Percentage:
@@ -159,10 +146,12 @@ public class TipoutModel: NSObject {
                     return 0.0
                 }
             }.reduce(0, combine: + )
+            * total
     }
     
     private var totalAmountTipouts: Double {
         return workers
+            .map { $0.method }
             .filter {
                 switch $0 {
                 case .Amount:
@@ -184,6 +173,7 @@ public class TipoutModel: NSObject {
     public var totalWorkersHours: Double {
         
         return workers
+            .map { $0.method }
             .filter {
                 switch $0 {
                 case .Hourly:
@@ -206,6 +196,7 @@ public class TipoutModel: NSObject {
     private var totalFunctionTipouts: Double {
         
         return workers
+            .map { $0.method }
             .filter {
                 switch $0 {
                 case .Function:
@@ -242,7 +233,8 @@ public class TipoutModel: NSObject {
             return total - totalTipouts
         }
         
-       var tipoutFuncs = workers.map {
+        var tipoutFuncs = workers.map { $0.method }
+            .map {
             
             (tipoutMethod: TipoutMethod) -> TipoutCalcFunction in
             
@@ -280,17 +272,7 @@ public class TipoutModel: NSObject {
         return tipoutFuncs
         
     }
-    
-    public func setWorkers(workers: [TipoutMethod]) {
-        willChangeValueForKey("workers")
-        
-        self.workers = workers
-        
-        didChangeValueForKey("workers")
-    }
-    
-    
-    
+
     // MARK: - Init
     
     public init(roundToNearest: Double) {
@@ -305,12 +287,6 @@ public class TipoutModel: NSObject {
     
     
     // MARK: - KVO
-    
-//    class func keyPathsForValuesAffectingTotalWorkersHours() -> Set<NSObject> {
-//        
-//        return Set(["workers"])
-//        
-//    }
     
     class func keyPathsForValuesAffectingTipouts() -> Set<NSObject> {
         return Set(["workers", "total"])
