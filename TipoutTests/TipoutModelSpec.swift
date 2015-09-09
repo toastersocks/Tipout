@@ -45,7 +45,7 @@ private func generateBigMixedDouble(f: Double -> Bool) -> FOXGenerator {
   
     return forAll(bigDecimalGenerator()) {
         (mixedNum: AnyObject!) -> Bool in
-        println(mixedNum)
+//        print(mixedNum)
         return f(mixedNum as! Double)
     }
 }
@@ -104,6 +104,8 @@ class TipoutSpec: QuickSpec {
                     tipoutModel.workers = [Worker(method: .Percentage(0.3)), Worker(method: .Hourly(3))]
                 }
             }
+            
+            // TODO: TEST .Function TipoutMethod
             
         }
     }
