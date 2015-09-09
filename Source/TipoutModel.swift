@@ -76,10 +76,22 @@ public class TipoutModel: NSObject {
     
     public func combineWith(tipoutModel: TipoutModel) -> TipoutModel {
         
+        var workerNames = workers.map { $0.id }
+            workerNames.appendContentsOf(
+                tipoutModel.workers.filter { self[$0.id] == nil }
+                    .map { $0.id })
+        
+        let combinedWorkers = workerNames.flatMap { self[$0] + tipoutModel[$0] }
+        /**
+        To combine by index rather than Worker name...
+        
+            var combinedWorkers = zip(workers, tipoutModel.workers).map(+)
+            combinedWorkers.appendContentsOf(leftoverIndexes(x: workers, y: tipoutModel.workers))
+        */
+        
         let combinedTipoutModel = TipoutModel(roundToNearest: self.roundToNearest)
         combinedTipoutModel.totalFunction = { self.totalFunction() + tipoutModel.totalFunction() }
-        var combinedWorkers = zip(workers, tipoutModel.workers).map(+)
-        combinedWorkers.appendContentsOf(leftoverIndexes(x: workers, y: tipoutModel.workers))
+        
         combinedTipoutModel.workers = combinedWorkers
         
         return combinedTipoutModel
