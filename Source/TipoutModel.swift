@@ -8,18 +8,6 @@
 
 import UIKit
 
-private func max<T: CollectionType>(x: T, y: T) -> T {
-    return count(x) > count(y) ? x : y
-}
-
-private func truncate(num: Double, toDecimalPlaces decimalPlaces: Int) -> Double {
-    let factor = pow(Double(10), Double(decimalPlaces))
-    return trunc(num * factor) / factor
-}
-
-private func round(num: Double, #toNearest: Double) -> Double {
-    return round(num / toNearest) * toNearest
-}
 
 public enum TipoutMethod {
     case Percentage(Double)
