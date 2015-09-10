@@ -35,7 +35,7 @@ private func bigDecimalGenerator() -> FOXGenerator {
     
     return FOXMap(numGenerator) {
         let num = $0 as! Int
-        return moveDecimal(num, 5)
+        return moveDecimal(num, places: 5)
     }
     
 }
@@ -45,7 +45,7 @@ private func generateBigMixedDouble(f: Double -> Bool) -> FOXGenerator {
   
     return forAll(bigDecimalGenerator()) {
         (mixedNum: AnyObject!) -> Bool in
-        println(mixedNum)
+//        print(mixedNum)
         return f(mixedNum as! Double)
     }
 }
@@ -73,7 +73,7 @@ class TipoutSpec: QuickSpec {
             describe("its total") {
                 
                 it("its total should be equal to the total of all worker tipouts") {
-                    tipoutModel.setWorkers([.Percentage(0.3), .Hourly(4), .Hourly(3), .Hourly(1)])
+                    tipoutModel.workers = [Worker(method: .Percentage(0.3), id: "1"),Worker(method: .Hourly(4), id: "2"), Worker(method: .Hourly(3), id: "3"), Worker(method: .Hourly(1), id: "4")]
                     let property = generateBigMixedDouble() {
                         (num: Double) in
                         tipoutModel.total = num
@@ -91,7 +91,7 @@ class TipoutSpec: QuickSpec {
             describe("a worker's tipout") {
                 context("when a worker's tipout is 30%, and the total is 100") {
                     it("should be 30") {
-                        tipoutModel.setWorkers([.Percentage(0.3), .Hourly(1)])
+                        tipoutModel.workers = [Worker(method: .Percentage(0.3), id: "1"), Worker(method: .Hourly(1), id: "2")]
                         tipoutModel.total = 100
                         expect(tipoutModel.tipouts[0]) == 30.0
                     }
@@ -99,12 +99,18 @@ class TipoutSpec: QuickSpec {
             }
             
             describe("the properties of a tipout") {
-                xit("should be assignable in any order") {
+                it("should be assignable in any order and tipouts should be equivalent") {
                     tipoutModel.total = 100.6
-                    tipoutModel.setWorkers([.Percentage(0.3), .Hourly(3)])
+                    tipoutModel.workers =  [Worker(method: .Percentage(0.3), id: "1"), Worker(method: .Hourly(3), id: "2"), Worker(method: .Hourly(1), id: "3")]
+                    
+                    let tipoutModel2 = TipoutModel(roundToNearest: 0.25)
+                    
+                    tipoutModel2.workers = [Worker(method: .Percentage(0.3), id: "1"), Worker(method: .Hourly(3), id: "2"), Worker(method: .Hourly(1), id: "3")]
+                    tipoutModel2.total = 100.6
+                    
+                    expect(tipoutModel.tipouts) == tipoutModel2.tipouts
                 }
             }
-            
         }
     }
 }

@@ -1,2 +1,4 @@
-github "Quick/Quick" == 0.3.1
-github "thoughtbot/NimbleFox" == 1.0.0
+github "Quick/Quick" "v0.6.0"
+github "toastersocks/NimbleFox" "master"
+#git "file:///Users/jambes/Desktop/Code/NimbleFox" "master"
+#github "Quick/Nimble" "swift-2.0"
