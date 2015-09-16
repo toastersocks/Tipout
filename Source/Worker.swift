@@ -9,7 +9,7 @@
 import Foundation
 
 // This is a class instead of a struct to work around a swift bug where a property observer on an array of structs is triggered when a property of one of it's struct elements is updated, even though the array property itself is not modified
-public class Worker {
+public class Worker: NSObject {
     public let method: TipoutMethod
     public let id: String
     internal var function: TipoutModel.TipoutCalcFunction

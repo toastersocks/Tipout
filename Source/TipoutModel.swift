@@ -115,7 +115,7 @@ public class TipoutModel: NSObject {
     
     
     
-    public var workers = [Worker]() {
+    dynamic public var workers = [Worker]() {
         didSet {
             assignTipoutFunctions()
             //            self.tipoutFunctions = tipoutFuncs
