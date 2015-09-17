@@ -10,28 +10,35 @@ import Foundation
 
 // This is a class instead of a struct to work around a swift bug where a property observer on an array of structs is triggered when a property of one of it's struct elements is updated, even though the array property itself is not modified
 public class Worker: NSObject {
+    // MARK: - Properties
+    
     public let method: TipoutMethod
-    public let id: String
-    internal var function: TipoutModel.TipoutCalcFunction
-    public var tipout: Double {
+    public dynamic let id: String
+    internal dynamic var function: TipoutModel.TipoutCalcFunction
+    public dynamic var tipout: Double {
         return function()
     }
     
-
-   internal init(method: TipoutMethod = .Amount(0.0), id: String = "", function: TipoutModel.TipoutCalcFunction = { 0.0 }) {
+    // MARK: - Inits
+   internal init(method: TipoutMethod = .Amount(0.0), id: String = "", function: TipoutModel.TipoutCalcFunction) {
         self.method = method
         self.id = id
         self.function = function
     }
-    
+
     public convenience init(method: TipoutMethod = .Amount(0.0), id: String = "") {
         self.init(method: method, id: id, function: { 0.0 })
     }
     
+    // MARK: KVO
+    class func keyPathsForValuesAffectingTipout() -> Set<NSObject> {
+        return Set(["function"])
+    }
 }
 
+// MARK: - Extensions
 
-public extension Worker {
+private extension Worker {
     func combine(worker: Worker) -> Worker {
         let combinedFunc = { [tipout] in tipout + worker.tipout }
         
@@ -47,8 +54,10 @@ public extension Worker {
     }
 }
 
+
+
 extension Worker: CustomDebugStringConvertible {
-    public var debugDescription: String {
+    public override var debugDescription: String {
         var descString = ""
         print("{", toStream: &descString)
         print("id = \(id)", toStream: &descString)
@@ -58,6 +67,8 @@ extension Worker: CustomDebugStringConvertible {
         return descString
     }
 }
+
+// MARK: - Operators
 
 public func +(lhs: Worker, rhs: Worker) -> Worker {
     return lhs.combine(rhs)
