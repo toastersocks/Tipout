@@ -62,6 +62,7 @@ func anyTipoutMethod() -> FOXGenerator {
 
 
 class TipoutSpec: QuickSpec {
+    var wasObserved = false
     override func spec() {
         
         describe("a TipoutModel") {
@@ -99,9 +100,11 @@ class TipoutSpec: QuickSpec {
             }
             
             describe("the properties of a tipout") {
+                
+
                 it("should be assignable in any order and tipouts should be equivalent") {
                     tipoutModel.total = 100.6
-                    tipoutModel.workers =  [Worker(method: .Percentage(0.3), id: "1"), Worker(method: .Hourly(3), id: "2"), Worker(method: .Hourly(1), id: "3")]
+                    tipoutModel.workers =      [Worker(method: .Percentage(0.3), id: "1"), Worker(method: .Hourly(3), id: "2"), Worker(method: .Hourly(1), id: "3")]
                     
                     let tipoutModel2 = TipoutModel(roundToNearest: 0.25)
                     
@@ -110,8 +113,43 @@ class TipoutSpec: QuickSpec {
                     
                     expect(tipoutModel.tipouts) == tipoutModel2.tipouts
                 }
+                
+                it("should be observable") {
+                    tipoutModel.total = 100.6
+                    tipoutModel.workers =      [Worker(method: .Percentage(0.3), id: "1"), Worker(method: .Hourly(3), id: "2"), Worker(method: .Hourly(1), id: "3")]
+                    
+                    tipoutModel.addObserver(self, forKeyPath: "workers", options: .New, context: nil)
+                    tipoutModel.workers[1] = Worker(method: .Amount(5), id: "bob")
+                    expect(self.wasObserved).toEventually(beTrue())
+                    self.wasObserved = false
+                    
+                    tipoutModel.addObserver(self, forKeyPath: "total", options: .New, context: nil)
+                    tipoutModel.total = 52.0
+                    expect(self.wasObserved).toEventually(beTrue())
+                }
             }
         }
     }
+    
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        guard let keyPath = keyPath else { return }
+        switch keyPath {
+            
+        case "workers":
+            if let newWorkers = change?[NSKeyValueChangeNewKey] as? Array<Worker> {
+                print(newWorkers)
+                wasObserved = true
+            }
+        case "total":
+            if let newTotal = change?[NSKeyValueChangeNewKey] as? Double {
+                print(newTotal)
+                wasObserved = true
+            }
+        default:
+            return
+        }
+    }
 }
+
+
 
