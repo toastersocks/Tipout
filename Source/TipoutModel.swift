@@ -16,7 +16,39 @@ public enum TipoutMethod {
     case Function(() -> Double)
 }
 
- extension TipoutMethod: CustomDebugStringConvertible {
+extension TipoutMethod: Equatable {}
+
+public func ==(lhs: TipoutMethod, rhs: TipoutMethod) -> Bool {
+    switch (lhs, rhs) {
+    case (.Percentage(let leftValue), .Percentage(let rightValue)) where leftValue == rightValue:
+        return true
+    case (.Amount(let leftValue), .Amount(let rightValue)) where leftValue == rightValue:
+        return true
+    case (.Hourly(let leftValue), .Hourly(let rightValue)) where leftValue == rightValue:
+        return true
+    case (.Function(let leftValue), .Function(let rightValue)) where leftValue() == rightValue():
+        return true
+    default:
+        return false
+    }
+}
+
+extension TipoutMethod: Hashable {
+    public var hashValue: Int {
+        switch self {
+        case .Percentage(let value):
+            return 0.hashValue ^ value.hashValue
+        case .Amount(let value):
+            return 1.hashValue ^ value.hashValue
+        case .Hourly(let value):
+            return 2.hashValue ^ value.hashValue
+        case .Function(let value):
+            return 3.hashValue ^ value().hashValue
+        }
+    }
+}
+
+extension TipoutMethod: CustomDebugStringConvertible {
     public var debugDescription: String {
         var descString = ""
         print("TipoutMethod.", terminator: "", toStream: &descString)
@@ -77,16 +109,16 @@ public class TipoutModel: NSObject {
     public func combineWith(tipoutModel: TipoutModel) -> TipoutModel {
         
         var workerNames = workers.map { $0.id }
-            workerNames.appendContentsOf(
-                tipoutModel.workers.filter { self[$0.id] == nil }
-                    .map { $0.id })
+        workerNames.appendContentsOf(
+            tipoutModel.workers.filter { self[$0.id] == nil }
+                .map { $0.id })
         
         let combinedWorkers = workerNames.flatMap { self[$0] + tipoutModel[$0] }
         /**
         To combine by index rather than Worker name...
         
-            var combinedWorkers = zip(workers, tipoutModel.workers).map(+)
-            combinedWorkers.appendContentsOf(leftoverIndexes(x: workers, y: tipoutModel.workers))
+        var combinedWorkers = zip(workers, tipoutModel.workers).map(+)
+        combinedWorkers.appendContentsOf(leftoverIndexes(x: workers, y: tipoutModel.workers))
         */
         
         let combinedTipoutModel = TipoutModel(roundToNearest: self.roundToNearest)
@@ -125,9 +157,9 @@ public class TipoutModel: NSObject {
     private func assignTipoutFunctions() {
         if !workers.isEmpty && total != 0.0 {
             
-        let tipoutFuncs = calculateTipoutFunctions()
-        for (index, function) in tipoutFuncs.enumerate() {
-            workers[index].function = function
+            let tipoutFuncs = calculateTipoutFunctions()
+            for (index, function) in tipoutFuncs.enumerate() {
+                workers[index].function = function
             }
         }
     }
@@ -251,33 +283,33 @@ public class TipoutModel: NSObject {
         
         var tipoutFuncs = workers.map { $0.method }
             .map {
-            
-            (tipoutMethod: TipoutMethod) -> TipoutCalcFunction in
-            
-            let function: TipoutCalcFunction 
-            
-            switch tipoutMethod {
                 
-            case .Percentage(let percentage):
+                (tipoutMethod: TipoutMethod) -> TipoutCalcFunction in
                 
-                function = { self.round(self.total * percentage) }
+                let function: TipoutCalcFunction
                 
-            case .Amount(let amount):
+                switch tipoutMethod {
+                    
+                case .Percentage(let percentage):
+                    
+                    function = { self.round(self.total * percentage) }
+                    
+                case .Amount(let amount):
+                    
+                    function = { amount }
+                    
+                case .Hourly(let hours):
+                    
+                    function = { self.round((self.total - (self.totalPercentageTipouts + self.totalAmountTipouts + self.totalFunctionTipouts)) * (hours / self.totalWorkersHours)) }
+                    
+                case .Function(let f):
+                    
+                    function = f
+                }
                 
-                function = { amount }
                 
-            case .Hourly(let hours):
-                
-                function = { self.round((self.total - (self.totalPercentageTipouts + self.totalAmountTipouts + self.totalFunctionTipouts)) * (hours / self.totalWorkersHours)) }
-                
-            case .Function(let f):
-                
-                function = f
-            }
-            
-            
-            // If we try to divide by zero, the result will be 'nan', 'Not a Number', so we have to check for this and return 0.0 if it is
-            return isnan(function()) ? { 0.0 } : function
+                // If we try to divide by zero, the result will be 'nan', 'Not a Number', so we have to check for this and return 0.0 if it is
+                return isnan(function()) ? { 0.0 } : function
         }
         
         // Add any remainder to the first worker
@@ -288,7 +320,7 @@ public class TipoutModel: NSObject {
         return tipoutFuncs
         
     }
-
+    
     // MARK: - Init
     
     public init(roundToNearest: Double) {

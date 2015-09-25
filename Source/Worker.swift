@@ -54,7 +54,28 @@ private extension Worker {
     }
 }
 
-
+extension Worker {
+    public override var hashValue: Int {
+        return id.hashValue ^ method.hashValue ^ tipout.hashValue
+    }
+    public override var hash: Int {
+        return hashValue
+    }
+    
+    func isEqualToWorker(object: AnyObject?) -> Bool {
+        guard let worker = object as? Worker else { return super.isEqual(object) }
+        if self.id == worker.id && self.method == worker.method && self.tipout == worker.tipout {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    public override func isEqual(object: AnyObject?) -> Bool {
+        guard let worker = object as? Worker else { return super.isEqual(object) }
+        return (self.id == worker.id && self.method == worker.method && self.tipout == worker.tipout)
+    }
+}
 
 extension Worker: CustomDebugStringConvertible {
     public override var debugDescription: String {
