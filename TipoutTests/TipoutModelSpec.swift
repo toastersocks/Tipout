@@ -99,7 +99,7 @@ class TipoutSpec: QuickSpec {
                 }
             }
             
-            describe("the properties of a tipout") {
+            describe("the properties") {
                 
 
                 it("should be assignable in any order and tipouts should be equivalent") {
