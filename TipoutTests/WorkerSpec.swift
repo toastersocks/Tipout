@@ -35,10 +35,11 @@ class WorkerSpec: QuickSpec {
                     expect(self.wasObserved).to(beTrue())
                     self.wasObserved = false
                     
+                    // NOTE: we can't do this because Worker's `method` property is not representable in objC
                     /*worker.addObserver(self, forKeyPath: "method", options: [.Initial, .New], context: nil)
                     expect(self.wasObserved).toEventually(beTrue())
-                    self.wasObserved = false
-                    */
+                    self.wasObserved = false*/
+                    
                 }
             }
             
