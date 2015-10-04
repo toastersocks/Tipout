@@ -51,7 +51,9 @@ extension TipoutMethod: Hashable {
 extension TipoutMethod: CustomDebugStringConvertible {
     public var debugDescription: String {
         var descString = ""
-        print("TipoutMethod.", terminator: "", toStream: &descString)
+//        print("TipoutMethod.", terminator: "", toStream: &descString)
+        print(".", terminator: "", toStream: &descString)
+
         switch self {
         case Percentage(let percent):
             print("Percentage(\(percent))", toStream: &descString)
