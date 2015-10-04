@@ -45,7 +45,6 @@ private func generateBigMixedDouble(f: Double -> Bool) -> FOXGenerator {
   
     return forAll(bigDecimalGenerator()) {
         (mixedNum: AnyObject!) -> Bool in
-//        print(mixedNum)
         return f(mixedNum as! Double)
     }
 }
