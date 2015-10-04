@@ -89,6 +89,18 @@ extension Worker: CustomDebugStringConvertible {
     }
 }
 
+extension Worker: CustomReflectable {
+    
+    public func customMirror() -> Mirror {
+        return Mirror(self, children: [
+            "method" : "\(method)",
+            "id" : id,
+            "tipout" : tipout
+            ], displayStyle: .Struct,
+            ancestorRepresentation: .Suppressed)
+    }
+}
+
 // MARK: - Operators
 
 public func +(lhs: Worker, rhs: Worker) -> Worker {
