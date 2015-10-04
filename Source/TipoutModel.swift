@@ -115,7 +115,19 @@ public class TipoutModel: NSObject {
             tipoutModel.workers.filter { self[$0.id] == nil }
                 .map { $0.id })
         
-        let combinedWorkers = workerNames.flatMap { self[$0] + tipoutModel[$0] }
+        let combinedWorkers = workerNames.flatMap {
+            (workerName: String) -> Worker? in
+            
+            guard let combinedWorker = self[workerName] + tipoutModel[workerName] else { return nil }
+            /* If the worker's TipoutMethod is not .Function we need to change it to .Function so
+             that their tipouts are not recalculated based on the combined tipout, and they can retain their original tipout amounts.
+            */
+            if case .Function = combinedWorker.method {
+                return combinedWorker
+            } else {
+                return Worker(method: .Function({ combinedWorker.tipout }), id: combinedWorker.id)
+            }
+        }
         /**
         To combine by index rather than Worker name...
         
@@ -342,4 +354,16 @@ public class TipoutModel: NSObject {
         return Set(["workers", "total"])
     }
     
+}
+
+extension TipoutModel: CustomReflectable {
+    
+    public func customMirror() -> Mirror {
+        return Mirror(self, children: [
+            "tipoutStatus" : tipoutStatus,
+            "total" : total,
+            "workers" : workers,
+            ], displayStyle: .Class,
+            ancestorRepresentation: .Suppressed)
+    }
 }
