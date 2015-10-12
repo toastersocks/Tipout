@@ -84,4 +84,3 @@ extension TipoutMethod: CustomDebugStringConvertible {
         return descString
     }
 }
-
