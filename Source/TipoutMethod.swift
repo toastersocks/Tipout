@@ -14,7 +14,7 @@ public enum TipoutMethod {
     case Hourly(Double)
     case Function(() -> Double)
     
-    init?(method: String, value: Any) {
+    public init?(method: String, value: Any) {
 
         switch method {
         case "hours", "Hours", "hourly", "Hourly" where value as? Double != nil:
