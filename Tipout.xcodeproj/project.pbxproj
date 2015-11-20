@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DD3153F81BC855F600BA6BA8 /* TipoutMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3153F71BC855F600BA6BA8 /* TipoutMethod.swift */; settings = {ASSET_TAGS = (); }; };
 		DD57445E1BAA06F90040B072 /* WorkerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD57445D1BAA06F90040B072 /* WorkerSpec.swift */; settings = {ASSET_TAGS = (); }; };
 		DD6549241B9CC1F3007EDF79 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6549231B9CC1F3007EDF79 /* Helpers.swift */; settings = {ASSET_TAGS = (); }; };
 		DD7CBA071B5841D1003B718D /* Fox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDE3D2401B5460AE00B1C703 /* Fox.framework */; };
@@ -14,6 +15,7 @@
 		DD7CBA091B5841D1003B718D /* NimbleFox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDE3D2421B5460AE00B1C703 /* NimbleFox.framework */; };
 		DD7CBA0A1B5841D1003B718D /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDE3D2431B5460AE00B1C703 /* Quick.framework */; };
 		DD8BD6FA1B2F4C9000A57BAE /* Tipout.h in Headers */ = {isa = PBXBuildFile; fileRef = DD8BD6F91B2F4C9000A57BAE /* Tipout.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DD9586771BCC7E6900F9D35C /* TipoutMethod+_ObjectiveCBridgeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9586761BCC7E6900F9D35C /* TipoutMethod+_ObjectiveCBridgeable.swift */; settings = {ASSET_TAGS = (); }; };
 		DD9B6F521B2F6A6600E5E96B /* TipoutModelSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9B6F511B2F6A6600E5E96B /* TipoutModelSpec.swift */; };
 		DD9B6F541B30791F00E5E96B /* TipoutModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9B6F531B30791F00E5E96B /* TipoutModel.swift */; };
 		DDC6B2311B7000F7007270F8 /* Worker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC6B2301B7000F7007270F8 /* Worker.swift */; };
@@ -30,6 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DD3153F71BC855F600BA6BA8 /* TipoutMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipoutMethod.swift; sourceTree = "<group>"; };
 		DD57445D1BAA06F90040B072 /* WorkerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkerSpec.swift; sourceTree = "<group>"; };
 		DD6549231B9CC1F3007EDF79 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		DD8BD6F41B2F4C9000A57BAE /* Tipout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Tipout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -37,6 +40,7 @@
 		DD8BD6F91B2F4C9000A57BAE /* Tipout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Tipout.h; sourceTree = "<group>"; };
 		DD8BD6FF1B2F4C9000A57BAE /* TipoutTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TipoutTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD8BD7051B2F4C9000A57BAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DD9586761BCC7E6900F9D35C /* TipoutMethod+_ObjectiveCBridgeable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TipoutMethod+_ObjectiveCBridgeable.swift"; sourceTree = "<group>"; };
 		DD9B6F501B2F673800E5E96B /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		DD9B6F511B2F6A6600E5E96B /* TipoutModelSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipoutModelSpec.swift; sourceTree = "<group>"; };
 		DD9B6F531B30791F00E5E96B /* TipoutModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipoutModel.swift; sourceTree = "<group>"; };
@@ -133,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				DD9B6F531B30791F00E5E96B /* TipoutModel.swift */,
+				DD3153F71BC855F600BA6BA8 /* TipoutMethod.swift */,
 				DD6549231B9CC1F3007EDF79 /* Helpers.swift */,
 				DDC6B2301B7000F7007270F8 /* Worker.swift */,
 			);
@@ -283,6 +288,7 @@
 				DD9B6F541B30791F00E5E96B /* TipoutModel.swift in Sources */,
 				DD6549241B9CC1F3007EDF79 /* Helpers.swift in Sources */,
 				DDC6B2311B7000F7007270F8 /* Worker.swift in Sources */,
+				DD3153F81BC855F600BA6BA8 /* TipoutMethod.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
