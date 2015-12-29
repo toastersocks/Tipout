@@ -85,5 +85,7 @@ Given a Double, rounds it to the nearest unit given.
 - returns: The Double rounded to the nearest value given in `toNearest`
 */
 public func round(num: Double, toNearest: Double) -> Double {
-    return round(num / toNearest) * toNearest
+    if toNearest > 0 {
+        return round(num / toNearest) * toNearest
+    } else { return num }
 }
