@@ -102,7 +102,6 @@ public class TipoutModel: NSObject {
     dynamic public var workers = [Worker]() {
         didSet {
             assignTipoutFunctions()
-            //            self.tipoutFunctions = tipoutFuncs
         }
     }
     
@@ -215,7 +214,7 @@ public class TipoutModel: NSObject {
     // MARK: - Methods
     
     subscript(id: String) -> Worker? {
-        return workers.filter { $0.id == id }.first
+        return workers.filter { $0.id.localizedCaseInsensitiveCompare(id) == .OrderedSame }.first
     }
     
     private func round(num: Double) -> Double {

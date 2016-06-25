@@ -20,12 +20,12 @@ public class Worker: NSObject {
     }
     
     // MARK: - Inits
-   internal init(method: TipoutMethod = .Amount(0.0), id: String = "", function: TipoutModel.TipoutCalcFunction) {
+    internal init(method: TipoutMethod = .Amount(0.0), id: String = "", function: TipoutModel.TipoutCalcFunction) {
         self.method = method
-        self.id = id
+        self.id = id.stringByTrimmingCharactersInSet(.whitespaceAndNewlineCharacterSet())
         self.function = function
     }
-
+    
     public convenience init(method: TipoutMethod = .Amount(0.0), id: String = "") {
         self.init(method: method, id: id, function: { 0.0 })
     }
@@ -77,17 +77,17 @@ extension Worker {
     }
 }
 
-extension Worker: CustomDebugStringConvertible {
-    public override var debugDescription: String {
-        var descString = ""
-        print("{", toStream: &descString)
-        print("id = \(id)", toStream: &descString)
-        print("method = \(method)", toStream: &descString)
-        print("tipout = \(tipout)", toStream: &descString)
-        print("}", toStream: &descString)
-        return descString
-    }
-}
+/*extension Worker: CustomDebugStringConvertible {
+ public override var debugDescription: String {
+ var descString = ""
+ print("{", toStream: &descString)
+ print("id = \(id)", toStream: &descString)
+ print("method = \(method)", toStream: &descString)
+ print("tipout = \(tipout)", toStream: &descString)
+ print("}", toStream: &descString)
+ return descString
+ }
+ }*/
 
 extension Worker: CustomReflectable {
     
@@ -97,7 +97,7 @@ extension Worker: CustomReflectable {
             "id" : id,
             "tipout" : tipout
             ], displayStyle: .Struct,
-            ancestorRepresentation: .Suppressed)
+               ancestorRepresentation: .Suppressed)
     }
 }
 
