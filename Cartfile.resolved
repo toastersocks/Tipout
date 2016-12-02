@@ -1,4 +1,3 @@
-github "jeffh/Fox" "78cc9dc1d446a1005cfb8a39a3e7c859f0608227"
-github "Quick/Nimble" "v2.0.0-rc.3"
-github "Quick/Quick" "v0.6.0"
-github "toastersocks/NimbleFox" "31c7eb908eb154b22611d25dab9f2771ade88a1a"
+github "toastersocks/Fox" "50d3414fd00296a96fdfad06c58f4eec7453c9d2"
+github "Quick/Nimble" "v5.0.0"
+github "Quick/Quick" "v0.10.0"

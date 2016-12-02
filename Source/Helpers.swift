@@ -31,11 +31,11 @@ this function would return
 - returns: A SubSequence containing the objects in the longest collection who's indexes are not included in the shortest collection
 */
 
-public func leftoverIndexes<T: CollectionType where T.Index == Int>(x x: T, y: T) -> T.SubSequence {
+public func leftoverIndexes<T: Collection>(x: T, y: T) -> T.SubSequence where T.Index == Int {
     
     let longest  = max(x: x, y: y)
     let shortest = min(x: x, y: y)
-    let leftover = longest[shortest.count..<longest.count]
+    let leftover = longest[shortest.endIndex..<longest.endIndex]
     return leftover
 }
 
@@ -47,7 +47,7 @@ Given two collections, returns the longest.
 
 - returns: The collection which has the highest `count` property. If both are the same, returns the collection passed as the second paramater.
 */
-public func max<T: CollectionType>(x x: T, y: T) -> T {
+public func max<T: Collection>(x: T, y: T) -> T {
     return x.count > y.count ? x : y
 }
 
@@ -59,7 +59,7 @@ Given two collections, returns the shortest.
 
 - returns: The collection which has the lowest `count` property. If both are the same, returns the collection passed as the second paramater.
 */
-public func min<T: CollectionType>(x x: T, y: T) -> T {
+public func min<T: Collection>(x: T, y: T) -> T {
     return x.count < y.count ? x : y
 }
 
@@ -71,7 +71,7 @@ Truncates a Double value to the given number of decimal places
 
 - returns: A double truncated to the given decimal place with no rounding taking place
 */
-public func truncate(num: Double, toDecimalPlaces decimalPlaces: Int) -> Double {
+public func truncate(_ num: Double, toDecimalPlaces decimalPlaces: Int) -> Double {
     let factor = pow(Double(10), Double(decimalPlaces))
     return trunc(num * factor) / factor
 }
@@ -84,7 +84,7 @@ Given a Double, rounds it to the nearest unit given.
 
 - returns: The Double rounded to the nearest value given in `toNearest`
 */
-public func round(num: Double, toNearest: Double) -> Double {
+public func round(_ num: Double, toNearest: Double) -> Double {
     if toNearest > 0 {
         return round(num / toNearest) * toNearest
     } else { return num }

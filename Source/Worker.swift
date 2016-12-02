@@ -20,32 +20,32 @@ public class Worker: NSObject {
     }
     
     // MARK: - Inits
-    internal init(method: TipoutMethod = .Amount(0.0), id: String = "", function: TipoutModel.TipoutCalcFunction) {
+    internal init(method: TipoutMethod = .amount(0.0), id: String = "", function: @escaping TipoutModel.TipoutCalcFunction) {
         self.method = method
-        self.id = id.stringByTrimmingCharactersInSet(.whitespaceAndNewlineCharacterSet())
+        self.id = id.trimmingCharacters(in: .whitespacesAndNewlines)
         self.function = function
     }
     
-    public convenience init(method: TipoutMethod = .Amount(0.0), id: String = "") {
+    public convenience init(method: TipoutMethod = .amount(0.0), id: String = "") {
         self.init(method: method, id: id, function: { 0.0 })
     }
     
     // MARK: KVO
     class func keyPathsForValuesAffectingTipout() -> Set<NSObject> {
-        return Set(["function"])
+        return Set(["function" as NSObject]) as Set<NSObject>
     }
 }
 
 // MARK: - Extensions
 
 private extension Worker {
-    func combine(worker: Worker) -> Worker {
+    func combine(_ worker: Worker) -> Worker {
         let combinedFunc = { [tipout] in tipout + worker.tipout }
         
-        return Worker(method: .Function(combinedFunc), id: self.id, function: combinedFunc)
+        return Worker(method: .function(combinedFunc), id: self.id, function: combinedFunc)
     }
     
-    func combine(worker: Worker?) -> Worker {
+    func combine(_ worker: Worker?) -> Worker {
         if let worker = worker {
             return combine(worker)
         } else {
@@ -71,7 +71,7 @@ extension Worker {
         }
     }
     
-    public override func isEqual(object: AnyObject?) -> Bool {
+    public override func isEqual(_ object: Any?) -> Bool {
         guard let worker = object as? Worker else { return super.isEqual(object) }
         return (self.id == worker.id && self.method == worker.method && self.tipout == worker.tipout)
     }
@@ -91,13 +91,13 @@ extension Worker {
 
 extension Worker: CustomReflectable {
     
-    public func customMirror() -> Mirror {
+    public var customMirror: Mirror {
         return Mirror(self, children: [
             "method" : "\(method)",
             "id" : id,
             "tipout" : tipout
-            ], displayStyle: .Struct,
-               ancestorRepresentation: .Suppressed)
+            ], displayStyle: .struct,
+               ancestorRepresentation: .suppressed)
     }
 }
 

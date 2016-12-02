@@ -16,9 +16,9 @@ public func +(lhs: TipoutModel, rhs: TipoutModel) -> TipoutModel {
 public class TipoutModel: NSObject {
     
     public enum TipoutStatus {
-        case Over
-        case Under
-        case Even
+        case over
+        case under
+        case even
     }
     
     
@@ -29,28 +29,28 @@ public class TipoutModel: NSObject {
     private var roundToNearest: Double = 0.0
     
     public var tipoutStatus: TipoutStatus {
-        let totalTips = tipouts.reduce(0, combine: + )
+        let totalTips = tipouts.reduce(0, + )
         switch totalTips {
             
         case _ where totalTips > total:
-            return .Over
+            return .over
             
         case _ where totalTips < total:
-            return .Under
+            return .under
             
         case _ where totalTips == total:
-            return .Even
+            return .even
             
         default:
             abort()
         }
     }
     
-    public func combineWith(tipoutModel: TipoutModel) -> TipoutModel {
+    open func combineWith(_ tipoutModel: TipoutModel) -> TipoutModel {
         
         var workerNames = workers.map { $0.id }
-        workerNames.appendContentsOf(
-            tipoutModel.workers.filter { self[$0.id] == nil }
+        workerNames.append(
+            contentsOf: tipoutModel.workers.filter { self[$0.id] == nil }
                 .map { $0.id })
         
         let combinedWorkers = workerNames.flatMap {
@@ -60,10 +60,10 @@ public class TipoutModel: NSObject {
             /* If the worker's TipoutMethod is not .Function we need to change it to .Function so
              that their tipouts are not recalculated based on the combined tipout, and they can retain their original tipout amounts.
             */
-            if case .Function = combinedWorker.method {
+            if case .function = combinedWorker.method {
                 return combinedWorker
             } else {
-                return Worker(method: .Function({ combinedWorker.tipout }), id: combinedWorker.id)
+                return Worker(method: .function({ combinedWorker.tipout }), id: combinedWorker.id)
             }
         }
         /**
@@ -84,11 +84,11 @@ public class TipoutModel: NSObject {
     
     public dynamic var total: Double {
         set {
-            willChangeValueForKey("total")
+            willChangeValue(forKey: "total")
             // We're dealing with money, so truncate the total to 2 decimal places
             totalFunction = { truncate(newValue, toDecimalPlaces: 2) }
             assignTipoutFunctions()
-            didChangeValueForKey("total")
+            didChangeValue(forKey: "total")
         }
         get {
             return totalFunction()
@@ -109,7 +109,7 @@ public class TipoutModel: NSObject {
         if !workers.isEmpty && total != 0.0 {
             
             let tipoutFuncs = calculateTipoutFunctions()
-            for (index, function) in tipoutFuncs.enumerate() {
+            for (index, function) in tipoutFuncs.enumerated() {
                 workers[index].function = function
             }
         }
@@ -127,7 +127,7 @@ public class TipoutModel: NSObject {
             .map { $0.method }
             .filter {
                 switch $0 {
-                case .Percentage:
+                case .percentage:
                     return true
                 default:
                     return false
@@ -135,12 +135,12 @@ public class TipoutModel: NSObject {
             }.map {
                 (tipoutMethod: TipoutMethod) -> Double in
                 switch tipoutMethod {
-                case .Percentage(let percent):
+                case .percentage(let percent):
                     return percent
                 default:
                     return 0.0
                 }
-            }.reduce(0, combine: + )
+            }.reduce(0, + )
             * total
     }
     
@@ -149,7 +149,7 @@ public class TipoutModel: NSObject {
             .map { $0.method }
             .filter {
                 switch $0 {
-                case .Amount:
+                case .amount:
                     return true
                 default:
                     return false
@@ -157,12 +157,12 @@ public class TipoutModel: NSObject {
             }.map {
                 (tipoutMethod: TipoutMethod) -> Double in
                 switch tipoutMethod {
-                case .Amount(let amount):
+                case .amount(let amount):
                     return amount
                 default:
                     return 0.0
                 }
-            }.reduce(0, combine: + )
+            }.reduce(0, + )
     }
     
     public var totalWorkersHours: Double {
@@ -171,7 +171,7 @@ public class TipoutModel: NSObject {
             .map { $0.method }
             .filter {
                 switch $0 {
-                case .Hourly:
+                case .hourly:
                     return true
                 default:
                     return false
@@ -179,12 +179,12 @@ public class TipoutModel: NSObject {
             }.map {
                 (tipoutMethod: TipoutMethod) -> Double in
                 switch tipoutMethod {
-                case .Hourly(let hours):
+                case .hourly(let hours):
                     return hours
                 default:
                     return 0.0
                 }
-            }.reduce(0, combine: + )
+            }.reduce(0, + )
         
     }
     
@@ -194,7 +194,7 @@ public class TipoutModel: NSObject {
             .map { $0.method }
             .filter {
                 switch $0 {
-                case .Function:
+                case .function:
                     return true
                 default:
                     return false
@@ -202,22 +202,22 @@ public class TipoutModel: NSObject {
             }.map {
                 (tipoutMethod: TipoutMethod) -> Double in
                 switch tipoutMethod {
-                case .Function(let f):
+                case .function(let f):
                     return f()
                 default:
                     return 0.0
                 }
-            }.reduce(0, combine: + )
+            }.reduce(0, + )
     }
     
     
     // MARK: - Methods
     
     subscript(id: String) -> Worker? {
-        return workers.filter { $0.id.localizedCaseInsensitiveCompare(id) == .OrderedSame }.first
+        return workers.filter { $0.id.localizedCaseInsensitiveCompare(id) == .orderedSame }.first
     }
     
-    private func round(num: Double) -> Double {
+    private func round(_ num: Double) -> Double {
         return Tipout.round(num, toNearest: roundToNearest)
     }
     
@@ -228,7 +228,7 @@ public class TipoutModel: NSObject {
                 return 0.0
             }
             
-            let totalTipouts = tipoutFuncs.reduce(0, combine: { $0 + $1() })
+            let totalTipouts = tipoutFuncs.reduce(0, { $0 + $1() })
             return total - totalTipouts
         }
         
@@ -241,26 +241,26 @@ public class TipoutModel: NSObject {
                 
                 switch tipoutMethod {
                     
-                case .Percentage(let percentage):
+                case .percentage(let percentage):
                     
                     function = { self.round(self.total * percentage) }
                     
-                case .Amount(let amount):
+                case .amount(let amount):
                     
                     function = { amount }
                     
-                case .Hourly(let hours):
+                case .hourly(let hours):
                     
                     function = { self.round((self.total - (self.totalPercentageTipouts + self.totalAmountTipouts + self.totalFunctionTipouts)) * (hours / self.totalWorkersHours)) }
                     
-                case .Function(let f):
+                case .function(let f):
                     
                     function = f
                 }
                 
                 
                 // If we try to divide by zero, the result will be 'nan', 'Not a Number', so we have to check for this and return 0.0 if it is
-                return isnan(function()) ? { 0.0 } : function
+                return function().isNaN ? { 0.0 } : function
         }
         
         // Add any remainder to the first worker
@@ -288,19 +288,19 @@ public class TipoutModel: NSObject {
     // MARK: - KVO
     
     class func keyPathsForValuesAffectingTipouts() -> Set<NSObject> {
-        return Set(["workers", "total"])
+        return Set(["workers" as NSObject, "total" as NSObject])
     }
     
 }
 
 extension TipoutModel: CustomReflectable {
     
-    public func customMirror() -> Mirror {
+    public var customMirror: Mirror {
         return Mirror(self, children: [
             "tipoutStatus" : tipoutStatus,
             "total" : total,
             "workers" : workers,
-            ], displayStyle: .Class,
-            ancestorRepresentation: .Suppressed)
+            ], displayStyle: .class,
+            ancestorRepresentation: .suppressed)
     }
 }
