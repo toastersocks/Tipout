@@ -39,12 +39,12 @@
 		DD8BD6F91B2F4C9000A57BAE /* Tipout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Tipout.h; sourceTree = "<group>"; };
 		DD8BD6FF1B2F4C9000A57BAE /* TipoutTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TipoutTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD8BD7051B2F4C9000A57BAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DD9B6F501B2F673800E5E96B /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		DD9B6F501B2F673800E5E96B /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		DD9B6F511B2F6A6600E5E96B /* TipoutModelSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipoutModelSpec.swift; sourceTree = "<group>"; };
 		DD9B6F531B30791F00E5E96B /* TipoutModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipoutModel.swift; sourceTree = "<group>"; };
 		DD9B6F551B3234C500E5E96B /* Scratchpad.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Scratchpad.playground; sourceTree = "<group>"; };
 		DDC6B2301B7000F7007270F8 /* Worker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Worker.swift; sourceTree = "<group>"; };
-		DDE3D23F1B545B6A00B1C703 /* Cartfile.private */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		DDE3D23F1B545B6A00B1C703 /* Cartfile.private */ = {isa = PBXFileReference; lastKnownFileType = text; name = Cartfile.private; path = ../Cartfile.private; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		DDE3D2401B5460AE00B1C703 /* Fox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fox.framework; path = Carthage/Build/iOS/Fox.framework; sourceTree = "<group>"; };
 		DDE3D2411B5460AE00B1C703 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		DDE3D2421B5460AE00B1C703 /* NimbleFox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NimbleFox.framework; path = Carthage/Build/iOS/NimbleFox.framework; sourceTree = "<group>"; };
@@ -76,9 +76,7 @@
 		DD8BD6EA1B2F4C8F00A57BAE = {
 			isa = PBXGroup;
 			children = (
-				DDE3D23F1B545B6A00B1C703 /* Cartfile.private */,
 				DD9B6F551B3234C500E5E96B /* Scratchpad.playground */,
-				DD9B6F501B2F673800E5E96B /* Podfile */,
 				DD8BD6F61B2F4C9000A57BAE /* Tipout */,
 				DD8BD7031B2F4C9000A57BAE /* TipoutTests */,
 				DD8BD6F51B2F4C9000A57BAE /* Products */,
@@ -99,7 +97,6 @@
 			isa = PBXGroup;
 			children = (
 				DD9B6F4D1B2F5C6F00E5E96B /* Source */,
-				DD8BD6F91B2F4C9000A57BAE /* Tipout.h */,
 				DD8BD6F71B2F4C9000A57BAE /* Supporting Files */,
 			);
 			path = Tipout;
@@ -108,6 +105,9 @@
 		DD8BD6F71B2F4C9000A57BAE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				DD8BD6F91B2F4C9000A57BAE /* Tipout.h */,
+				DDE3D23F1B545B6A00B1C703 /* Cartfile.private */,
+				DD9B6F501B2F673800E5E96B /* Podfile */,
 				DD8BD6F81B2F4C9000A57BAE /* Info.plist */,
 			);
 			name = "Supporting Files";
