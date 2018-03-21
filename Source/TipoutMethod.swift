@@ -9,22 +9,22 @@
 import Foundation
 
 public enum TipoutMethod {
-    case Percentage(Double)
-    case Amount(Double)
-    case Hourly(Double)
-    case Function(() -> Double)
+    case percentage(Double)
+    case amount(Double)
+    case hourly(Double)
+    case function(() -> Double)
     
     public init?(method: String, value: Any) {
 
         switch method {
         case "hours" where value as? Double != nil, "Hours" where value as? Double != nil, "hourly" where value as? Double != nil, "Hourly" where value as? Double != nil:
-            self = .Hourly(value as! Double)
+            self = .hourly(value as! Double)
         case "percentage" where value as? Double != nil, "Percentage" where value as? Double != nil:
-            self = .Percentage(value as! Double)
+            self = .percentage(value as! Double)
         case "amount" where value as? Double != nil, "Amount" where value as? Double != nil:
-            self = .Amount(value as! Double)
+            self = .amount(value as! Double)
         case "function" where value is () -> Double, "Function" where value is () -> Double:
-            self = .Function(value as! () -> Double)
+            self = .function(value as! () -> Double)
         default:
             return nil
         }
@@ -36,13 +36,13 @@ extension TipoutMethod: Equatable {}
 
 public func ==(lhs: TipoutMethod, rhs: TipoutMethod) -> Bool {
     switch (lhs, rhs) {
-    case (.Percentage(let leftValue), .Percentage(let rightValue)) where leftValue == rightValue:
+    case (.percentage(let leftValue), .percentage(let rightValue)) where leftValue == rightValue:
         return true
-    case (.Amount(let leftValue), .Amount(let rightValue)) where leftValue == rightValue:
+    case (.amount(let leftValue), .amount(let rightValue)) where leftValue == rightValue:
         return true
-    case (.Hourly(let leftValue), .Hourly(let rightValue)) where leftValue == rightValue:
+    case (.hourly(let leftValue), .hourly(let rightValue)) where leftValue == rightValue:
         return true
-    case (.Function(let leftValue), .Function(let rightValue)) where leftValue() == rightValue():
+    case (.function(let leftValue), .function(let rightValue)) where leftValue() == rightValue():
         return true
     default:
         return false
@@ -52,13 +52,13 @@ public func ==(lhs: TipoutMethod, rhs: TipoutMethod) -> Bool {
 extension TipoutMethod: Hashable {
     public var hashValue: Int {
         switch self {
-        case .Percentage(let value):
+        case .percentage(let value):
             return 0.hashValue ^ value.hashValue
-        case .Amount(let value):
+        case .amount(let value):
             return 1.hashValue ^ value.hashValue
-        case .Hourly(let value):
+        case .hourly(let value):
             return 2.hashValue ^ value.hashValue
-        case .Function(let value):
+        case .function(let value):
             return 3.hashValue ^ value().hashValue
         }
     }
@@ -71,13 +71,13 @@ extension TipoutMethod: CustomDebugStringConvertible {
         print(".", terminator: "", to: &descString)
         
         switch self {
-        case .Percentage(let percent):
+        case .percentage(let percent):
             print("Percentage(\(percent))", to: &descString)
-        case .Amount(let amount):
+        case .amount(let amount):
             print("Amount(\(amount))", to: &descString)
-        case .Hourly(let hours):
+        case .hourly(let hours):
             print("Hourly(\(hours))", to: &descString)
-        case .Function(let f):
+        case .function(let f):
             print("Function(\(f) (With a value of \(f()))", to: &descString)
         }
         

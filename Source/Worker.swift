@@ -13,20 +13,20 @@ public class Worker: NSObject {
     // MARK: - Properties
     
     public let method: TipoutMethod
-    public dynamic let id: String
-    internal dynamic var function: TipoutModel.TipoutCalcFunction
-    public dynamic var tipout: Double {
+    @objc public dynamic let id: String
+    @objc internal dynamic var function: TipoutModel.TipoutCalcFunction
+    @objc public dynamic var tipout: Double {
         return function()
     }
     
     // MARK: - Inits
-    internal init(method: TipoutMethod = .Amount(0.0), id: String = "", function: @escaping TipoutModel.TipoutCalcFunction) {
+    internal init(method: TipoutMethod = .amount(0.0), id: String = "", function: @escaping TipoutModel.TipoutCalcFunction) {
         self.method = method
         self.id = id
         self.function = function
     }
 
-    public convenience init(method: TipoutMethod = .Amount(0.0), id: String = "") {
+    public convenience init(method: TipoutMethod = .amount(0.0), id: String = "") {
         self.init(method: method, id: id, function: { 0.0 })
     }
     
@@ -42,7 +42,7 @@ private extension Worker {
     func combine(worker: Worker) -> Worker {
         let combinedFunc = { [tipout] in tipout + worker.tipout }
         
-        return Worker(method: .Function(combinedFunc), id: self.id, function: combinedFunc)
+        return Worker(method: .function(combinedFunc), id: self.id, function: combinedFunc)
     }
     
     func combine(worker: Worker?) -> Worker {

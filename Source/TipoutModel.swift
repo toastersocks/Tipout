@@ -16,9 +16,9 @@ public func +(lhs: TipoutModel, rhs: TipoutModel) -> TipoutModel {
 public class TipoutModel: NSObject {
     
     public enum TipoutStatus {
-        case Over
-        case Under
-        case Even
+        case over
+        case under
+        case even
     }
     
     
@@ -33,13 +33,13 @@ public class TipoutModel: NSObject {
         switch totalTips {
             
         case _ where totalTips > total:
-            return .Over
+            return .over
             
         case _ where totalTips < total:
-            return .Under
+            return .under
             
         case _ where totalTips == total:
-            return .Even
+            return .even
             
         default:
             abort()
@@ -60,10 +60,10 @@ public class TipoutModel: NSObject {
             /* If the worker's TipoutMethod is not .Function we need to change it to .Function so
              that their tipouts are not recalculated based on the combined tipout, and they can retain their original tipout amounts.
             */
-            if case .Function = combinedWorker.method {
+            if case .function = combinedWorker.method {
                 return combinedWorker
             } else {
-                return Worker(method: .Function({ combinedWorker.tipout }), id: combinedWorker.id)
+                return Worker(method: .function({ combinedWorker.tipout }), id: combinedWorker.id)
             }
         }
         /**
@@ -82,7 +82,7 @@ public class TipoutModel: NSObject {
     }
     
     
-    public dynamic var total: Double {
+    @objc public dynamic var total: Double {
         set {
             willChangeValue(forKey: "total")
             // We're dealing with money, so truncate the total to 2 decimal places
@@ -95,11 +95,11 @@ public class TipoutModel: NSObject {
         }
     }
     
-    private dynamic var totalFunction: () -> Double
+    @objc private dynamic var totalFunction: () -> Double
     
     
     
-    dynamic public var workers = [Worker]() {
+    @objc dynamic public var workers = [Worker]() {
         didSet {
             assignTipoutFunctions()
             //            self.tipoutFunctions = tipoutFuncs
@@ -117,7 +117,7 @@ public class TipoutModel: NSObject {
     }
     
     
-    public dynamic var tipouts: [Double] {
+    @objc public dynamic var tipouts: [Double] {
         
         return workers.map { $0.tipout }
     }
@@ -128,7 +128,7 @@ public class TipoutModel: NSObject {
             .map { $0.method }
             .filter {
                 switch $0 {
-                case .Percentage:
+                case .percentage:
                     return true
                 default:
                     return false
@@ -136,7 +136,7 @@ public class TipoutModel: NSObject {
             }.map {
                 (tipoutMethod: TipoutMethod) -> Double in
                 switch tipoutMethod {
-                case .Percentage(let percent):
+                case .percentage(let percent):
                     return percent
                 default:
                     return 0.0
@@ -150,7 +150,7 @@ public class TipoutModel: NSObject {
             .map { $0.method }
             .filter {
                 switch $0 {
-                case .Amount:
+                case .amount:
                     return true
                 default:
                     return false
@@ -158,7 +158,7 @@ public class TipoutModel: NSObject {
             }.map {
                 (tipoutMethod: TipoutMethod) -> Double in
                 switch tipoutMethod {
-                case .Amount(let amount):
+                case .amount(let amount):
                     return amount
                 default:
                     return 0.0
@@ -172,7 +172,7 @@ public class TipoutModel: NSObject {
             .map { $0.method }
             .filter {
                 switch $0 {
-                case .Hourly:
+                case .hourly:
                     return true
                 default:
                     return false
@@ -180,7 +180,7 @@ public class TipoutModel: NSObject {
             }.map {
                 (tipoutMethod: TipoutMethod) -> Double in
                 switch tipoutMethod {
-                case .Hourly(let hours):
+                case .hourly(let hours):
                     return hours
                 default:
                     return 0.0
@@ -195,7 +195,7 @@ public class TipoutModel: NSObject {
             .map { $0.method }
             .filter {
                 switch $0 {
-                case .Function:
+                case .function:
                     return true
                 default:
                     return false
@@ -203,7 +203,7 @@ public class TipoutModel: NSObject {
             }.map {
                 (tipoutMethod: TipoutMethod) -> Double in
                 switch tipoutMethod {
-                case .Function(let f):
+                case .function(let f):
                     return f()
                 default:
                     return 0.0
@@ -242,19 +242,19 @@ public class TipoutModel: NSObject {
                 
                 switch tipoutMethod {
                     
-                case .Percentage(let percentage):
+                case .percentage(let percentage):
                     
                     function = { self.round(num: self.total * percentage) }
                     
-                case .Amount(let amount):
+                case .amount(let amount):
                     
                     function = { amount }
                     
-                case .Hourly(let hours):
+                case .hourly(let hours):
                     
                     function = { self.round(num: (self.total - (self.totalPercentageTipouts + self.totalAmountTipouts + self.totalFunctionTipouts)) * (hours / self.totalWorkersHours)) }
                     
-                case .Function(let f):
+                case .function(let f):
                     
                     function = f
                 }
