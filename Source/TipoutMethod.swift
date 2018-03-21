@@ -17,14 +17,14 @@ public enum TipoutMethod {
     public init?(method: String, value: Any) {
 
         switch method {
-        case "hours", "Hours", "hourly", "Hourly" where value as? Double != nil:
-            self = Hourly(value as! Double)
-        case "percentage", "Percentage" where value as? Double != nil:
-            self = Percentage(value as! Double)
-        case "amount", "Amount" where value as? Double != nil:
-            self = Amount(value as! Double)
-        case "function", "Function" where value is () -> Double:
-            self = Function(value as! () -> Double)
+        case "hours" where value as? Double != nil, "Hours" where value as? Double != nil, "hourly" where value as? Double != nil, "Hourly" where value as? Double != nil:
+            self = .Hourly(value as! Double)
+        case "percentage" where value as? Double != nil, "Percentage" where value as? Double != nil:
+            self = .Percentage(value as! Double)
+        case "amount" where value as? Double != nil, "Amount" where value as? Double != nil:
+            self = .Amount(value as! Double)
+        case "function" where value is () -> Double, "Function" where value is () -> Double:
+            self = .Function(value as! () -> Double)
         default:
             return nil
         }
@@ -68,17 +68,17 @@ extension TipoutMethod: CustomDebugStringConvertible {
     public var debugDescription: String {
         var descString = ""
         //        print("TipoutMethod.", terminator: "", toStream: &descString)
-        print(".", terminator: "", toStream: &descString)
+        print(".", terminator: "", to: &descString)
         
         switch self {
-        case Percentage(let percent):
-            print("Percentage(\(percent))", toStream: &descString)
+        case .Percentage(let percent):
+            print("Percentage(\(percent))", to: &descString)
         case .Amount(let amount):
-            print("Amount(\(amount))", toStream: &descString)
+            print("Amount(\(amount))", to: &descString)
         case .Hourly(let hours):
-            print("Hourly(\(hours))", toStream: &descString)
+            print("Hourly(\(hours))", to: &descString)
         case .Function(let f):
-            print("Function(\(f) (With a value of \(f()))", toStream: &descString)
+            print("Function(\(f) (With a value of \(f()))", to: &descString)
         }
         
         return descString

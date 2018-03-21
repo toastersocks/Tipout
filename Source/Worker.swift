@@ -20,7 +20,7 @@ public class Worker: NSObject {
     }
     
     // MARK: - Inits
-   internal init(method: TipoutMethod = .Amount(0.0), id: String = "", function: TipoutModel.TipoutCalcFunction) {
+    internal init(method: TipoutMethod = .Amount(0.0), id: String = "", function: @escaping TipoutModel.TipoutCalcFunction) {
         self.method = method
         self.id = id
         self.function = function
@@ -32,7 +32,7 @@ public class Worker: NSObject {
     
     // MARK: KVO
     class func keyPathsForValuesAffectingTipout() -> Set<NSObject> {
-        return Set(["function"])
+        return Set(["function"]) as Set<NSObject>
     }
 }
 
@@ -47,7 +47,7 @@ private extension Worker {
     
     func combine(worker: Worker?) -> Worker {
         if let worker = worker {
-            return combine(worker)
+            return combine(worker: worker)
         } else {
             return self
         }
@@ -71,57 +71,57 @@ extension Worker {
         }
     }
     
-    public override func isEqual(object: AnyObject?) -> Bool {
+    public override func isEqual(_ object: Any?) -> Bool {
         guard let worker = object as? Worker else { return super.isEqual(object) }
         return (self.id == worker.id && self.method == worker.method && self.tipout == worker.tipout)
     }
 }
 
-extension Worker: CustomDebugStringConvertible {
+extension Worker/*: CustomDebugStringConvertible*/ {
     public override var debugDescription: String {
         var descString = ""
-        print("{", toStream: &descString)
-        print("id = \(id)", toStream: &descString)
-        print("method = \(method)", toStream: &descString)
-        print("tipout = \(tipout)", toStream: &descString)
-        print("}", toStream: &descString)
+        print("{", to: &descString)
+        print("id = \(id)", to: &descString)
+        print("method = \(method)", to: &descString)
+        print("tipout = \(tipout)", to: &descString)
+        print("}", to: &descString)
         return descString
     }
 }
 
 extension Worker: CustomReflectable {
     
-    public func customMirror() -> Mirror {
+    public var customMirror: Mirror {
         return Mirror(self, children: [
             "method" : "\(method)",
             "id" : id,
             "tipout" : tipout
-            ], displayStyle: .Struct,
-            ancestorRepresentation: .Suppressed)
+            ], displayStyle: .`struct`,
+            ancestorRepresentation: .suppressed)
     }
 }
 
 // MARK: - Operators
 
 public func +(lhs: Worker, rhs: Worker) -> Worker {
-    return lhs.combine(rhs)
+    return lhs.combine(worker: rhs)
 }
 
 public func +(lhs: Worker?, rhs: Worker?) -> Worker? {
     if let lhs = lhs {
-        return lhs.combine(rhs)
+        return lhs.combine(worker: rhs)
     } else {
         return rhs
     }
 }
 
 public func +(lhs: Worker, rhs: Worker?) -> Worker {
-    return lhs.combine(rhs)
+    return lhs.combine(worker: rhs)
 }
 
 public func +(lhs: Worker?, rhs: Worker) -> Worker {
     if let lhs = lhs {
-        return lhs.combine(rhs)
+        return lhs.combine(worker: rhs)
     } else {
         return rhs
     }

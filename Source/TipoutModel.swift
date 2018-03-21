@@ -8,7 +8,7 @@
 
 
 public func +(lhs: TipoutModel, rhs: TipoutModel) -> TipoutModel {
-    return lhs.combineWith(rhs)
+    return lhs.combineWith(tipoutModel: rhs)
 }
 
 
@@ -29,7 +29,7 @@ public class TipoutModel: NSObject {
     private var roundToNearest: Double = 0.0
     
     public var tipoutStatus: TipoutStatus {
-        let totalTips = tipouts.reduce(0, combine: + )
+        let totalTips = tipouts.reduce(0, + )
         switch totalTips {
             
         case _ where totalTips > total:
@@ -49,8 +49,8 @@ public class TipoutModel: NSObject {
     public func combineWith(tipoutModel: TipoutModel) -> TipoutModel {
         
         var workerNames = workers.map { $0.id }
-        workerNames.appendContentsOf(
-            tipoutModel.workers.filter { self[$0.id] == nil }
+        workerNames.append(
+            contentsOf: tipoutModel.workers.filter { self[$0.id] == nil }
                 .map { $0.id })
         
         let combinedWorkers = workerNames.flatMap {
@@ -84,11 +84,11 @@ public class TipoutModel: NSObject {
     
     public dynamic var total: Double {
         set {
-            willChangeValueForKey("total")
+            willChangeValue(forKey: "total")
             // We're dealing with money, so truncate the total to 2 decimal places
-            totalFunction = { truncate(newValue, toDecimalPlaces: 2) }
+            totalFunction = { truncate(num: newValue, toDecimalPlaces: 2) }
             assignTipoutFunctions()
-            didChangeValueForKey("total")
+            didChangeValue(forKey: "total")
         }
         get {
             return totalFunction()
@@ -110,7 +110,7 @@ public class TipoutModel: NSObject {
         if !workers.isEmpty && total != 0.0 {
             
             let tipoutFuncs = calculateTipoutFunctions()
-            for (index, function) in tipoutFuncs.enumerate() {
+            for (index, function) in tipoutFuncs.enumerated() {
                 workers[index].function = function
             }
         }
@@ -141,7 +141,7 @@ public class TipoutModel: NSObject {
                 default:
                     return 0.0
                 }
-            }.reduce(0, combine: + )
+            }.reduce(0, + )
             * total
     }
     
@@ -163,7 +163,7 @@ public class TipoutModel: NSObject {
                 default:
                     return 0.0
                 }
-            }.reduce(0, combine: + )
+            }.reduce(0, + )
     }
     
     public var totalWorkersHours: Double {
@@ -185,7 +185,7 @@ public class TipoutModel: NSObject {
                 default:
                     return 0.0
                 }
-            }.reduce(0, combine: + )
+            }.reduce(0, + )
         
     }
     
@@ -208,7 +208,7 @@ public class TipoutModel: NSObject {
                 default:
                     return 0.0
                 }
-            }.reduce(0, combine: + )
+            }.reduce(0, + )
     }
     
     
@@ -219,7 +219,7 @@ public class TipoutModel: NSObject {
     }
     
     private func round(num: Double) -> Double {
-        return Tipout.round(num, toNearest: roundToNearest)
+        return num.round(toNearest: roundToNearest)
     }
     
     private func calculateTipoutFunctions() -> [TipoutCalcFunction] {
@@ -229,7 +229,7 @@ public class TipoutModel: NSObject {
                 return 0.0
             }
             
-            let totalTipouts = tipoutFuncs.reduce(0, combine: { $0 + $1() })
+            let totalTipouts = tipoutFuncs.reduce(0, { $0 + $1() })
             return total - totalTipouts
         }
         
@@ -244,7 +244,7 @@ public class TipoutModel: NSObject {
                     
                 case .Percentage(let percentage):
                     
-                    function = { self.round(self.total * percentage) }
+                    function = { self.round(num: self.total * percentage) }
                     
                 case .Amount(let amount):
                     
@@ -252,7 +252,7 @@ public class TipoutModel: NSObject {
                     
                 case .Hourly(let hours):
                     
-                    function = { self.round((self.total - (self.totalPercentageTipouts + self.totalAmountTipouts + self.totalFunctionTipouts)) * (hours / self.totalWorkersHours)) }
+                    function = { self.round(num: (self.total - (self.totalPercentageTipouts + self.totalAmountTipouts + self.totalFunctionTipouts)) * (hours / self.totalWorkersHours)) }
                     
                 case .Function(let f):
                     
@@ -261,13 +261,13 @@ public class TipoutModel: NSObject {
                 
                 
                 // If we try to divide by zero, the result will be 'nan', 'Not a Number', so we have to check for this and return 0.0 if it is
-                return isnan(function()) ? { 0.0 } : function
+                return function().isNaN ? { 0.0 } : function
         }
         
         // Add any remainder to the first worker
         let remainder = calculateRemainder(tipoutFuncs)
         if remainder != 0.0 {
-            tipoutFuncs[0] = { [tipoutFuncs] in tipoutFuncs[0]() + Tipout.round(calculateRemainder(tipoutFuncs), toNearest: 0.01) }
+            tipoutFuncs[0] = { [tipoutFuncs] in tipoutFuncs[0]() + calculateRemainder(tipoutFuncs).round(toNearest: 0.01) }
         }
         return tipoutFuncs
         
@@ -289,19 +289,19 @@ public class TipoutModel: NSObject {
     // MARK: - KVO
     
     class func keyPathsForValuesAffectingTipouts() -> Set<NSObject> {
-        return Set(["workers", "total"])
+        return Set(["workers", "total"]) as Set<NSObject>
     }
     
 }
 
 extension TipoutModel: CustomReflectable {
     
-    public func customMirror() -> Mirror {
+    public var customMirror: Mirror {
         return Mirror(self, children: [
             "tipoutStatus" : tipoutStatus,
             "total" : total,
             "workers" : workers,
-            ], displayStyle: .Class,
-            ancestorRepresentation: .Suppressed)
+            ], displayStyle: .`class`,
+            ancestorRepresentation: .suppressed)
     }
 }
