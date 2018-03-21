@@ -71,7 +71,7 @@ Truncates a Double value to the given number of decimal places
 
 - returns: A double truncated to the given decimal place with no rounding taking place
 */
-public func truncate(_ num: Double, toDecimalPlaces decimalPlaces: Int) -> Double {
+public func truncate(num: Double, toDecimalPlaces decimalPlaces: Int) -> Double {
     let factor = pow(Double(10), Double(decimalPlaces))
     return trunc(num * factor) / factor
 }
@@ -84,8 +84,17 @@ Given a Double, rounds it to the nearest unit given.
 
 - returns: The Double rounded to the nearest value given in `toNearest`
 */
+extension Double {
+    public func round(toNearest: Double) -> Double {
+        if toNearest > 0 {
+            return Darwin.round(self / toNearest) * toNearest
+        } else { return self }
+    }
+}
+/*
 public func round(_ num: Double, toNearest: Double) -> Double {
     if toNearest > 0 {
         return round(num / toNearest) * toNearest
     } else { return num }
 }
+*/

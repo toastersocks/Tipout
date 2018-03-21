@@ -8,7 +8,7 @@
 
 
 public func +(lhs: TipoutModel, rhs: TipoutModel) -> TipoutModel {
-    return lhs.combineWith(rhs)
+    return lhs.combineWith(tipoutModel: rhs)
 }
 
 
@@ -46,7 +46,7 @@ public class TipoutModel: NSObject {
         }
     }
     
-    open func combineWith(_ tipoutModel: TipoutModel) -> TipoutModel {
+    public func combineWith(tipoutModel: TipoutModel) -> TipoutModel {
         
         var workerNames = workers.map { $0.id }
         workerNames.append(
@@ -82,11 +82,11 @@ public class TipoutModel: NSObject {
     }
     
     
-    public dynamic var total: Double {
+    @objc public dynamic var total: Double {
         set {
             willChangeValue(forKey: "total")
             // We're dealing with money, so truncate the total to 2 decimal places
-            totalFunction = { truncate(newValue, toDecimalPlaces: 2) }
+            totalFunction = { truncate(num: newValue, toDecimalPlaces: 2) }
             assignTipoutFunctions()
             didChangeValue(forKey: "total")
         }
@@ -95,13 +95,14 @@ public class TipoutModel: NSObject {
         }
     }
     
-    private dynamic var totalFunction: () -> Double
+    @objc private dynamic var totalFunction: () -> Double
     
     
     
-    dynamic public var workers = [Worker]() {
+    @objc dynamic public var workers = [Worker]() {
         didSet {
             assignTipoutFunctions()
+            //            self.tipoutFunctions = tipoutFuncs
         }
     }
     
@@ -116,7 +117,7 @@ public class TipoutModel: NSObject {
     }
     
     
-    public dynamic var tipouts: [Double] {
+    @objc public dynamic var tipouts: [Double] {
         
         return workers.map { $0.tipout }
     }
@@ -214,11 +215,11 @@ public class TipoutModel: NSObject {
     // MARK: - Methods
     
     subscript(id: String) -> Worker? {
-        return workers.filter { $0.id.localizedCaseInsensitiveCompare(id) == .orderedSame }.first
+        return workers.filter { $0.id == id }.first
     }
     
-    private func round(_ num: Double) -> Double {
-        return Tipout.round(num, toNearest: roundToNearest)
+    private func round(num: Double) -> Double {
+        return num.round(toNearest: roundToNearest)
     }
     
     private func calculateTipoutFunctions() -> [TipoutCalcFunction] {
@@ -243,7 +244,7 @@ public class TipoutModel: NSObject {
                     
                 case .percentage(let percentage):
                     
-                    function = { self.round(self.total * percentage) }
+                    function = { self.round(num: self.total * percentage) }
                     
                 case .amount(let amount):
                     
@@ -251,7 +252,7 @@ public class TipoutModel: NSObject {
                     
                 case .hourly(let hours):
                     
-                    function = { self.round((self.total - (self.totalPercentageTipouts + self.totalAmountTipouts + self.totalFunctionTipouts)) * (hours / self.totalWorkersHours)) }
+                    function = { self.round(num: (self.total - (self.totalPercentageTipouts + self.totalAmountTipouts + self.totalFunctionTipouts)) * (hours / self.totalWorkersHours)) }
                     
                 case .function(let f):
                     
@@ -266,7 +267,7 @@ public class TipoutModel: NSObject {
         // Add any remainder to the first worker
         let remainder = calculateRemainder(tipoutFuncs)
         if remainder != 0.0 {
-            tipoutFuncs[0] = { [tipoutFuncs] in tipoutFuncs[0]() + Tipout.round(calculateRemainder(tipoutFuncs), toNearest: 0.01) }
+            tipoutFuncs[0] = { [tipoutFuncs] in tipoutFuncs[0]() + calculateRemainder(tipoutFuncs).round(toNearest: 0.01) }
         }
         return tipoutFuncs
         
@@ -288,7 +289,7 @@ public class TipoutModel: NSObject {
     // MARK: - KVO
     
     class func keyPathsForValuesAffectingTipouts() -> Set<NSObject> {
-        return Set(["workers" as NSObject, "total" as NSObject])
+        return Set(["workers", "total"]) as Set<NSObject>
     }
     
 }
@@ -300,7 +301,7 @@ extension TipoutModel: CustomReflectable {
             "tipoutStatus" : tipoutStatus,
             "total" : total,
             "workers" : workers,
-            ], displayStyle: .class,
+            ], displayStyle: .`class`,
             ancestorRepresentation: .suppressed)
     }
 }

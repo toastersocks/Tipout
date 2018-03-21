@@ -3,16 +3,16 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 47;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		DD3153F81BC855F600BA6BA8 /* TipoutMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3153F71BC855F600BA6BA8 /* TipoutMethod.swift */; };
-		DD3F71811DF10D1E000F6476 /* FoxMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3F71801DF10D1E000F6476 /* FoxMatchers.swift */; };
 		DD57445E1BAA06F90040B072 /* WorkerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD57445D1BAA06F90040B072 /* WorkerSpec.swift */; };
 		DD6549241B9CC1F3007EDF79 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6549231B9CC1F3007EDF79 /* Helpers.swift */; };
 		DD7CBA071B5841D1003B718D /* Fox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDE3D2401B5460AE00B1C703 /* Fox.framework */; };
 		DD7CBA081B5841D1003B718D /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDE3D2411B5460AE00B1C703 /* Nimble.framework */; };
+		DD7CBA091B5841D1003B718D /* NimbleFox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDE3D2421B5460AE00B1C703 /* NimbleFox.framework */; };
 		DD7CBA0A1B5841D1003B718D /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDE3D2431B5460AE00B1C703 /* Quick.framework */; };
 		DD8BD6FA1B2F4C9000A57BAE /* Tipout.h in Headers */ = {isa = PBXBuildFile; fileRef = DD8BD6F91B2F4C9000A57BAE /* Tipout.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DD9B6F521B2F6A6600E5E96B /* TipoutModelSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9B6F511B2F6A6600E5E96B /* TipoutModelSpec.swift */; };
@@ -32,7 +32,6 @@
 
 /* Begin PBXFileReference section */
 		DD3153F71BC855F600BA6BA8 /* TipoutMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipoutMethod.swift; sourceTree = "<group>"; };
-		DD3F71801DF10D1E000F6476 /* FoxMatchers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoxMatchers.swift; sourceTree = "<group>"; };
 		DD57445D1BAA06F90040B072 /* WorkerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkerSpec.swift; sourceTree = "<group>"; };
 		DD6549231B9CC1F3007EDF79 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		DD8BD6F41B2F4C9000A57BAE /* Tipout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Tipout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -40,12 +39,12 @@
 		DD8BD6F91B2F4C9000A57BAE /* Tipout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Tipout.h; sourceTree = "<group>"; };
 		DD8BD6FF1B2F4C9000A57BAE /* TipoutTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TipoutTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD8BD7051B2F4C9000A57BAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DD9B6F501B2F673800E5E96B /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		DD9B6F501B2F673800E5E96B /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		DD9B6F511B2F6A6600E5E96B /* TipoutModelSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipoutModelSpec.swift; sourceTree = "<group>"; };
 		DD9B6F531B30791F00E5E96B /* TipoutModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipoutModel.swift; sourceTree = "<group>"; };
 		DD9B6F551B3234C500E5E96B /* Scratchpad.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Scratchpad.playground; sourceTree = "<group>"; };
 		DDC6B2301B7000F7007270F8 /* Worker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Worker.swift; sourceTree = "<group>"; };
-		DDE3D23F1B545B6A00B1C703 /* Cartfile.private */ = {isa = PBXFileReference; lastKnownFileType = text; name = Cartfile.private; path = ../Cartfile.private; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		DDE3D23F1B545B6A00B1C703 /* Cartfile.private */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		DDE3D2401B5460AE00B1C703 /* Fox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fox.framework; path = Carthage/Build/iOS/Fox.framework; sourceTree = "<group>"; };
 		DDE3D2411B5460AE00B1C703 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		DDE3D2421B5460AE00B1C703 /* NimbleFox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NimbleFox.framework; path = Carthage/Build/iOS/NimbleFox.framework; sourceTree = "<group>"; };
@@ -66,6 +65,7 @@
 			files = (
 				DD7CBA071B5841D1003B718D /* Fox.framework in Frameworks */,
 				DD7CBA081B5841D1003B718D /* Nimble.framework in Frameworks */,
+				DD7CBA091B5841D1003B718D /* NimbleFox.framework in Frameworks */,
 				DD7CBA0A1B5841D1003B718D /* Quick.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -76,7 +76,9 @@
 		DD8BD6EA1B2F4C8F00A57BAE = {
 			isa = PBXGroup;
 			children = (
+				DDE3D23F1B545B6A00B1C703 /* Cartfile.private */,
 				DD9B6F551B3234C500E5E96B /* Scratchpad.playground */,
+				DD9B6F501B2F673800E5E96B /* Podfile */,
 				DD8BD6F61B2F4C9000A57BAE /* Tipout */,
 				DD8BD7031B2F4C9000A57BAE /* TipoutTests */,
 				DD8BD6F51B2F4C9000A57BAE /* Products */,
@@ -97,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				DD9B6F4D1B2F5C6F00E5E96B /* Source */,
+				DD8BD6F91B2F4C9000A57BAE /* Tipout.h */,
 				DD8BD6F71B2F4C9000A57BAE /* Supporting Files */,
 			);
 			path = Tipout;
@@ -105,9 +108,6 @@
 		DD8BD6F71B2F4C9000A57BAE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				DD8BD6F91B2F4C9000A57BAE /* Tipout.h */,
-				DDE3D23F1B545B6A00B1C703 /* Cartfile.private */,
-				DD9B6F501B2F673800E5E96B /* Podfile */,
 				DD8BD6F81B2F4C9000A57BAE /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -126,7 +126,6 @@
 		DD8BD7041B2F4C9000A57BAE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				DD3F71801DF10D1E000F6476 /* FoxMatchers.swift */,
 				DD8BD7051B2F4C9000A57BAE /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -213,22 +212,20 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "James Pamplona";
 				TargetAttributes = {
 					DD8BD6F31B2F4C9000A57BAE = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = NQ5FBJE8P8;
-						LastSwiftMigration = 0810;
+						LastSwiftMigration = 0920;
 					};
 					DD8BD6FE1B2F4C9000A57BAE = {
 						CreatedOnToolsVersion = 6.3.2;
-						LastSwiftMigration = 0800;
 					};
 				};
 			};
 			buildConfigurationList = DD8BD6EE1B2F4C8F00A57BAE /* Build configuration list for PBXProject "Tipout" */;
-			compatibilityVersion = "Xcode 6.3";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -271,6 +268,7 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Fox.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Nimble.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/NimbleFox.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Quick.framework",
 			);
 			outputPaths = (
@@ -298,7 +296,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD57445E1BAA06F90040B072 /* WorkerSpec.swift in Sources */,
-				DD3F71811DF10D1E000F6476 /* FoxMatchers.swift in Sources */,
 				DD9B6F521B2F6A6600E5E96B /* TipoutModelSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -327,15 +324,13 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -360,7 +355,6 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -380,15 +374,13 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -404,8 +396,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -418,8 +408,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				CURRENT_PROJECT_VERSION = 3;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -431,12 +420,12 @@
 				INFOPLIST_FILE = Tipout/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-function-bodies";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.toastersocks.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -446,8 +435,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				CURRENT_PROJECT_VERSION = 3;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -459,12 +447,12 @@
 				INFOPLIST_FILE = Tipout/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-function-bodies";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.toastersocks.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -485,7 +473,6 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.toastersocks.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0.1;
 			};
 			name = Debug;
 		};
@@ -500,7 +487,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.toastersocks.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0.1;
 			};
 			name = Release;
 		};
