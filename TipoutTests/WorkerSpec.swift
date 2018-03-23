@@ -8,9 +8,7 @@
 
 import Foundation
 @testable import Tipout
-import Fox
 import Nimble
-//import NimbleFox
 import Quick
 
 
