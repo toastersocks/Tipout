@@ -7,11 +7,11 @@
 //
 
 import Foundation
-import Tipout
-import Fox
+@testable import Tipout
 import Nimble
-//import NimbleFox
 import Quick
+import QuickSwiftCheck
+import SwiftCheck
 
 extension NSNumber {
     
@@ -19,53 +19,6 @@ extension NSNumber {
         return NSNumber(value: -num.intValue)
     }
 }
-
-private func generateDouble(_ f: @escaping (Double) -> Bool) -> FOXGenerator {
-    return forAll(FOXDouble()) {
-        (floatNum: Any!) -> Bool in
-        return f(floatNum as! Double)
-    } as! (AnyObject!) -> Bool as! FOXGenerator
-}
-
-
-private func moveDecimal(_ num: Int, places: Int) -> Double {
-    let factor = pow(Double(10), Double(places))
-    return Double(num) / factor
-
-}
-
-
-private func bigDecimalGenerator() -> FOXGenerator {
-    let bounds: NSNumber = 999999999
-    
-    let numGenerator = FOXChoose(-bounds, bounds)
-    
-    return FOXMap(numGenerator) {
-        let num = $0 as! Int
-        return moveDecimal(num, places: 5)
-    }
-    
-}
-
-
-private func generateBigMixedDouble(_ f: @escaping (Double) -> Bool) -> FOXGenerator {
-  
-    return forAll(bigDecimalGenerator()) {
-        (mixedNum: Any!) -> Bool in
-        return f(mixedNum as! Double)
-    }
-}
-
-
-func anyTipoutMethod() -> FOXGenerator {
-    let kEnumValueString = "enumValueString"
-    let kAssociatedValue = "associatedValue"
-    return FOXDictionary([
-        kEnumValueString: FOXElements(["Hourly", "Percentage"]),
-        kAssociatedValue: FOXDouble()
-        ])
-    }
-
 
 class TipoutSpec: QuickSpec {
     var wasObserved = false
@@ -79,15 +32,13 @@ class TipoutSpec: QuickSpec {
             }
             describe("its total") {
                 
-                it("its total should be equal to the total of all worker tipouts") {
-                    tipoutModel.workers = [Worker(method: .percentage(0.3), id: "1"),Worker(method: .hourly(4), id: "2"), Worker(method: .hourly(3), id: "3"), Worker(method: .hourly(1), id: "4")]
-                    let property = generateBigMixedDouble() {
-                        (num: Double) in
+                sc_it("its total should be equal to the total of all worker tipouts") {
+                    tipoutModel.workers = [Worker(method: .percentage(0.3), id: "1"), Worker(method: .hourly(4), id: "2"), Worker(method: .hourly(3), id: "3"), Worker(method: .hourly(1), id: "4")]
+                    return forAll { (num: Double)  in
                         tipoutModel.total = num
-                        
-                        return abs(tipoutModel.tipouts.reduce(0, + ) - tipoutModel.total) < 0.0001
+                        print("TIPOUT TOTAL: ", tipoutModel.total)
+                        return expect(tipoutModel.tipouts.reduce(0, +)).sc_to(beCloseTo(tipoutModel.total, within: 0.0001))
                     }
-                    expect(property).to(hold())
                 }
             
             }
@@ -100,7 +51,7 @@ class TipoutSpec: QuickSpec {
                     it("should be 30") {
                         tipoutModel.workers = [Worker(method: .percentage(0.3), id: "1"), Worker(method: .hourly(1), id: "2")]
                         tipoutModel.total = 100
-                        expect(tipoutModel.tipouts[0]) == 30.0
+                        expect(tipoutModel.tipouts[0]).to(beCloseTo(30.0, within: 0.0001))
                     }
                 }
             }
@@ -135,6 +86,15 @@ class TipoutSpec: QuickSpec {
                 }
             }
         }
+        
+        describe("random integers") {
+            sc_it("they should be random and run many times") { () -> Property in
+                return forAll() { (num: Double) -> Testable in
+                    print(num)
+                    return expect(num).sc_to(equal(num))
+                }
+            }
+        }
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -155,6 +115,8 @@ class TipoutSpec: QuickSpec {
             return
         }
     }
+    
+    
 }
 
 

@@ -1,7 +1,8 @@
 #github "Quick/Quick" "v0.6.0"
-github "Quick/Quick" "v0.10.0"
-github "Quick/Nimble" "v5.0.0"
-github "toastersocks/Fox" "master"
+github "Quick/Quick" ~> 1.0
+github "Quick/Nimble" ~> 7.0
+github "akashivskyy/QuickSwiftCheck" ~> 2.0
+#github "toastersocks/Fox" "master"
 #github "toastersocks/NimbleFox" "master"
 #git "file:///Users/jambes/Desktop/Code/NimbleFox" "master"
 #github "Quick/Nimble" "swift-2.0"
